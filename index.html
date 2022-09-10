@@ -86,6 +86,8 @@
 		        
 					<a class="github" target="_blank" href="https://github.com/w6rsty" title="github"><i class="icon-github"></i></a>
 		        
+					<a class="bilibili" target="_blank" href="https://space.bilibili.com/346421139" title="bilibili"><i class="icon-bilibili"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -125,6 +127,8 @@
 			        
 						<a class="github" target="_blank" href="https://github.com/w6rsty" title="github"><i class="icon-github"></i></a>
 			        
+						<a class="bilibili" target="_blank" href="https://space.bilibili.com/346421139" title="bilibili"><i class="icon-bilibili"></i></a>
+			        
 				</div>
 			</nav>
 
@@ -150,6 +154,235 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-自言自语" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/10/%E8%87%AA%E8%A8%80%E8%87%AA%E8%AF%AD/">自言自语</a>
+    </h1>
+  
+
+        
+        <a href="/2022/09/10/%E8%87%AA%E8%A8%80%E8%87%AA%E8%AF%AD/" class="archive-article-date">
+  	<time datetime="2022-09-10T09:27:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>两个星期能干完dart和flutter吗</p>
+<p>![wuwu]{.&#x2F;自言自语&#x2F;panda.png}</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/09/10/%E8%87%AA%E8%A8%80%E8%87%AA%E8%AF%AD/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Dart中String、Bool类型及其常用API" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/10/Dart%E4%B8%ADString%E3%80%81Bool%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%B8%B8%E7%94%A8API/">Dart中String、Bool类型及其常用API</a>
+    </h1>
+  
+
+        
+        <a href="/2022/09/10/Dart%E4%B8%ADString%E3%80%81Bool%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%B8%B8%E7%94%A8API/" class="archive-article-date">
+  	<time datetime="2022-09-10T09:19:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Dart"><a href="#Dart" class="headerlink" title="Dart"></a>Dart</h1><p>语法</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//声明函数不需要关键字</span></span><br><span class="line"><span class="keyword">void</span> prinNum(<span class="built_in">int</span> <span class="built_in">num</span>)&#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;This is a <span class="subst">$num</span>.&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//必须定义入口文件</span></span><br><span class="line"><span class="keyword">void</span> main()&#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">num</span> = <span class="number">32</span>;<span class="comment">//声明并初始化变量</span></span><br><span class="line">    printNum(<span class="built_in">num</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数和参数前面都有类型声明</p>
+<p>打印用print</p>
+<p>必须加   ;</p>
+<p>main 是入口函数，dart程序从main开始执行</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>明确指定类型：<code>int age=18</code></p>
+<p>不明确类型：<code>var age; dynamic age;</code></p>
+<p>变量默认值为null</p>
+<p>Dart变量不会隐式转换</p>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>常量一旦声明不能再改</p>
+<p>声明：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> age = <span class="number">18</span>;</span><br><span class="line"><span class="keyword">final</span> age = <span class="number">18</span>;</span><br></pre></td></tr></table></figure>
+
+<p>区别：</p>
+<p>无法将运行时的值分配给const常量，如<code>const time = DateTime.now()</code></p>
+<p>而final常量可以</p>
+<h2 id="指定数据类型"><a href="#指定数据类型" class="headerlink" title="指定数据类型"></a>指定数据类型</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> name = <span class="string">&#x27;name&#x27;</span>;<span class="comment">//只能储存字符类型</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="1-Number"><a href="#1-Number" class="headerlink" title="1.Number"></a>1.Number</h3><h4 id="num数字类型（可以是整数，也可是小数）"><a href="#num数字类型（可以是整数，也可是小数）" class="headerlink" title="num数字类型（可以是整数，也可是小数）"></a>num数字类型（可以是整数，也可是小数）</h4><pre><code>        int表示整数
+
+        double表示浮点数，精度更高
+</code></pre>
+<h3 id="2-String字符串"><a href="#2-String字符串" class="headerlink" title="2,String字符串"></a>2,String字符串</h3><h3 id="3-Boolean布尔"><a href="#3-Boolean布尔" class="headerlink" title="3.Boolean布尔"></a>3.Boolean布尔</h3><h3 id="4-List列表"><a href="#4-List列表" class="headerlink" title="4.List列表"></a>4.List列表</h3><h3 id="5-Set集合"><a href="#5-Set集合" class="headerlink" title="5.Set集合"></a>5.Set集合</h3><h3 id="6-Map映射"><a href="#6-Map映射" class="headerlink" title="6.Map映射"></a>6.Map映射</h3><h3 id="7-其他"><a href="#7-其他" class="headerlink" title="7.其他"></a>7.其他</h3><h2 id="转换API"><a href="#转换API" class="headerlink" title="转换API"></a>转换API</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n.toString()</span><br><span class="line">.toDouble()</span><br><span class="line">.toInt()<span class="comment">//向下取整</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="四舍五入API"><a href="#四舍五入API" class="headerlink" title="四舍五入API"></a>四舍五入API</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">3.14159</span>.round());<span class="comment">//保留整数</span></span><br><span class="line"><span class="built_in">print</span>(<span class="number">3.14159</span>.toStringAsFixed(<span class="number">4</span>));<span class="comment">//指定四舍五入的小数位数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="返回余数"><a href="#返回余数" class="headerlink" title="返回余数"></a>返回余数</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">10.</span>remainder(<span class="number">4</span>));<span class="comment">//返回余数</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数字比较"><a href="#数字比较" class="headerlink" title="数字比较"></a>数字比较</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">10.</span>compareTo(<span class="number">12</span>));<span class="comment">//返回结果：0，相同/1,大于/-1,小于</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="返回最大公约数"><a href="#返回最大公约数" class="headerlink" title="返回最大公约数"></a>返回最大公约数</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">12.</span>gcd(<span class="number">18</span>));<span class="comment">//得到6</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="科学计数法"><a href="#科学计数法" class="headerlink" title="科学计数法"></a>科学计数法</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">1000.</span>toStringAsExponential(<span class="number">2</span>));<span class="comment">//保留几位有效数字</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h2><h3 id="声明字符串"><a href="#声明字符串" class="headerlink" title="声明字符串"></a>声明字符串</h3><pre><code>        单引号、双引号
+
+        三个引号可以声明包含换行符的字符串
+</code></pre>
+<h3 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h3><pre><code>        https://api.dart.cn/stable/dart-core/String-class.html\
+</code></pre>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">RegExp</span>(<span class="string">r&#x27;正则表达式&#x27;</span>)</span><br><span class="line"><span class="built_in">RegExp</span>(<span class="string">r&#x27;\d+&#x27;</span>)<span class="comment">//匹配数字</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(str1+str2);</span><br><span class="line"><span class="comment">//模板字符串形式</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;<span class="subst">$str1</span> <span class="subst">$str2</span>&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串的分割"><a href="#字符串的分割" class="headerlink" title="字符串的分割"></a>字符串的分割</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> str = <span class="string">&quot;Hello,world&quot;</span>;</span><br><span class="line"><span class="built_in">print</span>(str.split(<span class="string">&#x27;&#x27;</span>));<span class="comment">//按空进行分割</span></span><br><span class="line"><span class="comment">//结果</span></span><br><span class="line">[H, e, l, l, o, ,, w, o, r, l, d]<span class="comment">//得到列表</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串的裁割"><a href="#字符串的裁割" class="headerlink" title="字符串的裁割"></a>字符串的裁割</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;    abc    &#x27;</span>.trim());</span><br><span class="line">.trim()<span class="comment">//去掉左右的空格</span></span><br><span class="line">.trimLeft()</span><br><span class="line">.trimRight()</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断字符串是否为空"><a href="#判断字符串是否为空" class="headerlink" title="判断字符串是否为空"></a>判断字符串是否为空</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&#x27;</span>.isEmpty);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&#x27;</span>.isNotEmpty);<span class="comment">//返回值为bool类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(str.replaceAll(<span class="string">&#x27;World&#x27;</span>,<span class="string">&#x27;Dart&#x27;</span>));<span class="comment">//将所有World替换为Dart</span></span><br><span class="line"><span class="comment">//支持正则替换</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a1b2c3d4e5&#x27;</span>.replaceAll(<span class="built_in">RegExp</span>(<span class="string">r&#x27;\d+&#x27;</span>),<span class="string">&#x27;_&#x27;</span>));<span class="comment">//将所有数字替换为_</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="通过正则进行匹配"><a href="#通过正则进行匹配" class="headerlink" title="通过正则进行匹配"></a>通过正则进行匹配</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isPhone = <span class="built_in">RegExp</span>(<span class="string">r&#x27;^1\d&#123;10&#125;$&#x27;</span>);<span class="comment">//声明一个变量</span></span><br><span class="line"><span class="built_in">print</span>(isPhone.hasMatch(<span class="string">&#x27;13412345678&#x27;</span>));<span class="comment">//返回值为bool类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查找字符串"><a href="#查找字符串" class="headerlink" title="查找字符串"></a>查找字符串</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(str.contains(<span class="string">&#x27;a&#x27;</span>));<span class="comment">//返回值为bool类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="定位字符串"><a href="#定位字符串" class="headerlink" title="定位字符串"></a>定位字符串</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(str.indexOf(<span class="string">&#x27;a&#x27;</span>));<span class="comment">//返回下标</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.indexOf()</code>是从左往右，<code>.lastIndexOF()</code>是从右往左</p>
+<h2 id="Bool类型"><a href="#Bool类型" class="headerlink" title="Bool类型"></a>Bool类型</h2><p>关键字<code>bool</code></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bool</span> flag = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>dart中对变量进行判断，要显式地检查布尔值</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(varname)&#123;...&#125;<span class="comment">//错误</span></span><br><span class="line"><span class="keyword">if</span>(varname == <span class="number">0</span>)&#123;...&#125;<span class="comment">//正确</span></span><br><span class="line"><span class="keyword">if</span>(varname == <span class="keyword">null</span>)&#123;...&#125;<span class="comment">//正确</span></span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> flag;<span class="comment">//未初始化，则默认为null</span></span><br><span class="line"><span class="keyword">if</span>(flag == <span class="keyword">null</span>)&#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;真&#x27;</span>)；</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;假&#x27;</span>)；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">0</span> / <span class="number">0</span>;<span class="comment">//结果为NaN</span></span><br><span class="line"><span class="built_in">print</span>(n.isNaN);<span class="comment">//返回值为NaN</span></span><br></pre></td></tr></table></figure>
+
+<p>类似还有<code>isFinite</code>、<code>isInfinite</code>、<code>isNegative</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">dart</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/09/10/Dart%E4%B8%ADString%E3%80%81Bool%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%B8%B8%E7%94%A8API/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-hexo博客部署时的图片加载问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1004,6 +1237,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
