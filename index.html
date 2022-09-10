@@ -140,19 +140,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-hexo博客部署时的图片加载问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/09/10/test/">test</a>
+      <a class="article-title" href="/2022/09/10/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/">hexo博客部署时的图片加载问题</a>
     </h1>
   
 
         
-        <a href="/2022/09/10/test/" class="archive-article-date">
+        <a href="/2022/09/10/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/" class="archive-article-date">
   	<time datetime="2022-09-10T02:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-10</time>
 </a>
         
@@ -160,7 +160,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>博客中本地图片在部署后无法加载</p>
+<h3 id="1-安装依赖"><a href="#1-安装依赖" class="headerlink" title="1.安装依赖"></a>1.安装依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>此时进行hexo new会创建一个同名文件夹</p>
+<h3 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h3><p>在markdown中<code>![描述]&#123;./文件夹/IMG.JPG&#125;</code></p>
+<h1 id="URL一定要用-“-x2F-“"><a href="#URL一定要用-“-x2F-“" class="headerlink" title="!!!!URL一定要用 “    &#x2F;     “"></a>!!!!URL一定要用 “    &#x2F;     “</h1>
       
 
       
@@ -168,11 +173,22 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2022/09/10/test/">展开全文 >></a>
+          <a class="article-more-a" href="/2022/09/10/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/">展开全文 >></a>
         </p>
       
 
@@ -222,11 +238,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><img src="/2022/09/10/dart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE/.%5Cdart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE%5C1.png"></p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><img src="/2022/09/10/dart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE/1.png"></p>
 <p>运行时无法找到文件</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><img src="/2022/09/10/dart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE/.%5Cdart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE%5C2.png"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><img src="/2022/09/10/dart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE/2.png"></p>
 <p>在launch.json中添加”program”路径，注意 \ 要进行转义</p>
-<p><img src="/2022/09/10/dart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE/.%5Cdart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE%5C3.png"></p>
+<p><img src="/2022/09/10/dart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE/3.png"></p>
 
       
 
@@ -973,6 +989,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">dart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>
