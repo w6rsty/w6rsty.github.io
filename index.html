@@ -155,6 +155,193 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-flutterApp结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/11/flutterApp%E7%BB%93%E6%9E%84/">flutterApp结构</a>
+    </h1>
+  
+
+        
+        <a href="/2022/09/11/flutterApp%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2022-09-11T14:15:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/2022/09/11/flutterApp%E7%BB%93%E6%9E%84/flutterApp%E7%BB%93%E6%9E%84%5Cflutter%E7%9B%AE%E5%BD%95.png" alt="flutter目录"><img src="/2022/09/11/flutterApp%E7%BB%93%E6%9E%84/fluter_tree.png" alt="fluter_tree"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">flutter</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/09/11/flutterApp%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Dart数据类型List" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/11/Dart%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BList/">Dart数据类型List</a>
+    </h1>
+  
+
+        
+        <a href="/2022/09/11/Dart%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BList/" class="archive-article-date">
+  	<time datetime="2022-09-11T14:14:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Dart数据类型List"><a href="#Dart数据类型List" class="headerlink" title="Dart数据类型List"></a>Dart数据类型List</h1><h2 id="Dart中的数组，两种声明方法"><a href="#Dart中的数组，两种声明方法" class="headerlink" title="Dart中的数组，两种声明方法"></a>Dart中的数组，两种声明方法</h2><h3 id="1-字面量方式"><a href="#1-字面量方式" class="headerlink" title="1.字面量方式"></a>1.字面量方式</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> list_1 = [];<span class="comment">//不限定元素的数据类型</span></span><br><span class="line"><span class="built_in">List</span> list_2 = &lt;<span class="built_in">int</span>&gt;[];<span class="comment">//限定元素数据类型为int</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-构造函数方式"><a href="#2-构造函数方式" class="headerlink" title="2.构造函数方式"></a>2.构造函数方式</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> list_1 = <span class="keyword">new</span> <span class="built_in">List</span>.empty(growable:<span class="keyword">true</span>);<span class="comment">//不限制长度的空列表</span></span><br><span class="line"><span class="built_in">List</span> list_2 = <span class="keyword">new</span> <span class="built_in">List</span>.filled(<span class="number">3</span>,<span class="number">0</span>);<span class="comment">//声明指定长度的填充列表</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list_1.add(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">//向列表中添加元素</span></span><br></pre></td></tr></table></figure>
+
+<p>关于.empty()</p>
+<p>创建一个空列表，默认参数为<code>growable: false</code>,改为<code>growable: true</code>则长度不限</p>
+<p>关于.filled()</p>
+<p>参数<code>length,fill</code></p>
+<p>length是列表长度，fill是填充内容</p>
+<p>例：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = <span class="keyword">new</span> <span class="built_in">List</span>.filled(<span class="number">3</span>,<span class="number">6</span>);</span><br><span class="line"><span class="built_in">print</span>(list);</span><br><span class="line"><span class="comment">//result</span></span><br><span class="line">[<span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="扩展操作符-…"><a href="#扩展操作符-…" class="headerlink" title="扩展操作符(…)"></a>扩展操作符(…)</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> list2 = [<span class="number">0</span>,...list];<span class="comment">//将list直接添加到list2中</span></span><br></pre></td></tr></table></figure>
+
+<p> 特别注意到</p>
+<p>上例中，若list未初始化，则为null，此时输出list2会报错</p>
+<p>所以有</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list1;</span><br><span class="line"><span class="keyword">var</span> list2 = [<span class="number">0</span>,...?list1];<span class="comment">//添加?，若list1为null则不添加，反则添加</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><h3 id="返回列表的长度"><a href="#返回列表的长度" class="headerlink" title="返回列表的长度"></a>返回列表的长度</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(list.length);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="列表的反转"><a href="#列表的反转" class="headerlink" title="列表的反转"></a>列表的反转</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,a,b];</span><br><span class="line"><span class="built_in">print</span>(list.reversed);<span class="comment">//</span></span><br><span class="line"><span class="comment">//result</span></span><br><span class="line">(b,a,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>)<span class="comment">//注意[]变为了()</span></span><br><span class="line"><span class="comment">//若想得到列表则有</span></span><br><span class="line"><span class="built_in">print</span>(list.reserved.toList());</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.addAll([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]);<span class="comment">//参数为iterable</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list.remove(<span class="number">6</span>);<span class="comment">//删除指定元素</span></span><br><span class="line">list.removeAt(<span class="number">1</span>); <span class="comment">//参数index为下标，根据下标删除元素</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="在指定的位置添加元素"><a href="#在指定的位置添加元素" class="headerlink" title="在指定的位置添加元素"></a>在指定的位置添加元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.insert();<span class="comment">//参数index，element，即下标、元素</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="清空元素"><a href="#清空元素" class="headerlink" title="清空元素"></a>清空元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list.clear();</span><br><span class="line"><span class="built_in">print</span>(list.isEmpty);<span class="comment">//检验是否为空</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="合并元素"><a href="#合并元素" class="headerlink" title="合并元素"></a>合并元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> words = [<span class="string">&#x27;Hello&#x27;</span>,<span class="string">&#x27;World&#x27;</span>];</span><br><span class="line"><span class="built_in">print</span>(words.join(<span class="string">&#x27;-&#x27;</span>));<span class="comment">//join()中填连接词</span></span><br></pre></td></tr></table></figure>
+
+<p>注意是将同一列表中所有元素以相同的连接词进行合并</p>
+<h2 id="遍历List"><a href="#遍历List" class="headerlink" title="遍历List"></a>遍历List</h2><h3 id="forEach-遍历列表"><a href="#forEach-遍历列表" class="headerlink" title="forEach()  		遍历列表"></a>forEach()  		遍历列表</h3><h3 id="map-遍历并处理元素，然后生成新的列表"><a href="#map-遍历并处理元素，然后生成新的列表" class="headerlink" title="map()				遍历并处理元素，然后生成新的列表"></a>map()				遍历并处理元素，然后生成新的列表</h3><h3 id="where-返回满足条件的数据"><a href="#where-返回满足条件的数据" class="headerlink" title="where()			返回满足条件的数据"></a>where()			返回满足条件的数据</h3><h3 id="any-判断列表中是否满足某个条件，只要有一项满足就返回true"><a href="#any-判断列表中是否满足某个条件，只要有一项满足就返回true" class="headerlink" title="any()				判断列表中是否满足某个条件，只要有一项满足就返回true"></a>any()				判断列表中是否满足某个条件，只要有一项满足就返回true</h3><h3 id="every-判断是否每一项都满足条件，都满足条件才返回true"><a href="#every-判断是否每一项都满足条件，都满足条件才返回true" class="headerlink" title="every()			判断是否每一项都满足条件，都满足条件才返回true"></a>every()			判断是否每一项都满足条件，都满足条件才返回true</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">dart</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/09/11/Dart%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BList/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-自言自语" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -710,6 +897,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
               </li>
              
               <li class="article-tag-list-item">

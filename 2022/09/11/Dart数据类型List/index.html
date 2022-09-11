@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>hexo博客部署时的图片加载问题 | Learning_Blog</title>
+  <title>Dart数据类型List | Learning_Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题博客中本地图片在部署后无法加载 1.安装依赖1npm install https:&#x2F;&#x2F;github.com&#x2F;CodeFalling&#x2F;hexo-asset-image --save  此时进行hexo new会创建一个同名文件夹 2.引用在markdown中![描述]&amp;#123;.&#x2F;文件夹&#x2F;IMG.JPG&amp;#125; !!!!URL一定要用 “    &#x2F;     “">
+  <meta name="description" content="Dart数据类型ListDart中的数组，两种声明方法1.字面量方式12List list_1 &#x3D; [];&#x2F;&#x2F;不限定元素的数据类型List list_2 &#x3D; &lt;int&gt;[];&#x2F;&#x2F;限定元素数据类型为int  2.构造函数方式12345List list_1 &#x3D; new List.empty(growable:true);&#x2F;&#x2F;不限制长度的空列表List list_2 &#x3D; new List.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo博客部署时的图片加载问题">
-<meta property="og:url" content="http://example.com/2022/09/10/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:title" content="Dart数据类型List">
+<meta property="og:url" content="http://example.com/2022/09/11/Dart%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BList/index.html">
 <meta property="og:site_name" content="Learning_Blog">
-<meta property="og:description" content="问题博客中本地图片在部署后无法加载 1.安装依赖1npm install https:&#x2F;&#x2F;github.com&#x2F;CodeFalling&#x2F;hexo-asset-image --save  此时进行hexo new会创建一个同名文件夹 2.引用在markdown中![描述]&amp;#123;.&#x2F;文件夹&#x2F;IMG.JPG&amp;#125; !!!!URL一定要用 “    &#x2F;     “">
+<meta property="og:description" content="Dart数据类型ListDart中的数组，两种声明方法1.字面量方式12List list_1 &#x3D; [];&#x2F;&#x2F;不限定元素的数据类型List list_2 &#x3D; &lt;int&gt;[];&#x2F;&#x2F;限定元素数据类型为int  2.构造函数方式12345List list_1 &#x3D; new List.empty(growable:true);&#x2F;&#x2F;不限制长度的空列表List list_2 &#x3D; new List.">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-10T02:54:17.000Z">
-<meta property="article:modified_time" content="2022-09-10T03:08:55.248Z">
+<meta property="article:published_time" content="2022-09-11T14:14:24.000Z">
+<meta property="article:modified_time" content="2022-09-11T14:16:52.075Z">
 <meta property="article:author" content="w6rsty">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="dart">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Learning_Blog" type="application/atom+xml">
@@ -155,32 +155,67 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hexo博客部署时的图片加载问题" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Dart数据类型List" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      hexo博客部署时的图片加载问题
+      Dart数据类型List
     </h1>
   
 
         
-        <a href="/2022/09/10/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2022-09-10T02:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-10</time>
+        <a href="/2022/09/11/Dart%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BList/" class="archive-article-date">
+  	<time datetime="2022-09-11T14:14:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>博客中本地图片在部署后无法加载</p>
-<h3 id="1-安装依赖"><a href="#1-安装依赖" class="headerlink" title="1.安装依赖"></a>1.安装依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+        <h1 id="Dart数据类型List"><a href="#Dart数据类型List" class="headerlink" title="Dart数据类型List"></a>Dart数据类型List</h1><h2 id="Dart中的数组，两种声明方法"><a href="#Dart中的数组，两种声明方法" class="headerlink" title="Dart中的数组，两种声明方法"></a>Dart中的数组，两种声明方法</h2><h3 id="1-字面量方式"><a href="#1-字面量方式" class="headerlink" title="1.字面量方式"></a>1.字面量方式</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> list_1 = [];<span class="comment">//不限定元素的数据类型</span></span><br><span class="line"><span class="built_in">List</span> list_2 = &lt;<span class="built_in">int</span>&gt;[];<span class="comment">//限定元素数据类型为int</span></span><br></pre></td></tr></table></figure>
 
-<p>此时进行hexo new会创建一个同名文件夹</p>
-<h3 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h3><p>在markdown中<code>![描述]&#123;./文件夹/IMG.JPG&#125;</code></p>
-<h1 id="URL一定要用-“-x2F-“"><a href="#URL一定要用-“-x2F-“" class="headerlink" title="!!!!URL一定要用 “    &#x2F;     “"></a>!!!!URL一定要用 “    &#x2F;     “</h1>
+<h3 id="2-构造函数方式"><a href="#2-构造函数方式" class="headerlink" title="2.构造函数方式"></a>2.构造函数方式</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> list_1 = <span class="keyword">new</span> <span class="built_in">List</span>.empty(growable:<span class="keyword">true</span>);<span class="comment">//不限制长度的空列表</span></span><br><span class="line"><span class="built_in">List</span> list_2 = <span class="keyword">new</span> <span class="built_in">List</span>.filled(<span class="number">3</span>,<span class="number">0</span>);<span class="comment">//声明指定长度的填充列表</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list_1.add(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">//向列表中添加元素</span></span><br></pre></td></tr></table></figure>
+
+<p>关于.empty()</p>
+<p>创建一个空列表，默认参数为<code>growable: false</code>,改为<code>growable: true</code>则长度不限</p>
+<p>关于.filled()</p>
+<p>参数<code>length,fill</code></p>
+<p>length是列表长度，fill是填充内容</p>
+<p>例：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = <span class="keyword">new</span> <span class="built_in">List</span>.filled(<span class="number">3</span>,<span class="number">6</span>);</span><br><span class="line"><span class="built_in">print</span>(list);</span><br><span class="line"><span class="comment">//result</span></span><br><span class="line">[<span class="number">6</span>, <span class="number">6</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="扩展操作符-…"><a href="#扩展操作符-…" class="headerlink" title="扩展操作符(…)"></a>扩展操作符(…)</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> list2 = [<span class="number">0</span>,...list];<span class="comment">//将list直接添加到list2中</span></span><br></pre></td></tr></table></figure>
+
+<p> 特别注意到</p>
+<p>上例中，若list未初始化，则为null，此时输出list2会报错</p>
+<p>所以有</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list1;</span><br><span class="line"><span class="keyword">var</span> list2 = [<span class="number">0</span>,...?list1];<span class="comment">//添加?，若list1为null则不添加，反则添加</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><h3 id="返回列表的长度"><a href="#返回列表的长度" class="headerlink" title="返回列表的长度"></a>返回列表的长度</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(list.length);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="列表的反转"><a href="#列表的反转" class="headerlink" title="列表的反转"></a>列表的反转</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,a,b];</span><br><span class="line"><span class="built_in">print</span>(list.reversed);<span class="comment">//</span></span><br><span class="line"><span class="comment">//result</span></span><br><span class="line">(b,a,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>)<span class="comment">//注意[]变为了()</span></span><br><span class="line"><span class="comment">//若想得到列表则有</span></span><br><span class="line"><span class="built_in">print</span>(list.reserved.toList());</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.addAll([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]);<span class="comment">//参数为iterable</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list.remove(<span class="number">6</span>);<span class="comment">//删除指定元素</span></span><br><span class="line">list.removeAt(<span class="number">1</span>); <span class="comment">//参数index为下标，根据下标删除元素</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="在指定的位置添加元素"><a href="#在指定的位置添加元素" class="headerlink" title="在指定的位置添加元素"></a>在指定的位置添加元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.insert();<span class="comment">//参数index，element，即下标、元素</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="清空元素"><a href="#清空元素" class="headerlink" title="清空元素"></a>清空元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list.clear();</span><br><span class="line"><span class="built_in">print</span>(list.isEmpty);<span class="comment">//检验是否为空</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="合并元素"><a href="#合并元素" class="headerlink" title="合并元素"></a>合并元素</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> words = [<span class="string">&#x27;Hello&#x27;</span>,<span class="string">&#x27;World&#x27;</span>];</span><br><span class="line"><span class="built_in">print</span>(words.join(<span class="string">&#x27;-&#x27;</span>));<span class="comment">//join()中填连接词</span></span><br></pre></td></tr></table></figure>
+
+<p>注意是将同一列表中所有元素以相同的连接词进行合并</p>
+<h2 id="遍历List"><a href="#遍历List" class="headerlink" title="遍历List"></a>遍历List</h2><h3 id="forEach-遍历列表"><a href="#forEach-遍历列表" class="headerlink" title="forEach()  		遍历列表"></a>forEach()  		遍历列表</h3><h3 id="map-遍历并处理元素，然后生成新的列表"><a href="#map-遍历并处理元素，然后生成新的列表" class="headerlink" title="map()				遍历并处理元素，然后生成新的列表"></a>map()				遍历并处理元素，然后生成新的列表</h3><h3 id="where-返回满足条件的数据"><a href="#where-返回满足条件的数据" class="headerlink" title="where()			返回满足条件的数据"></a>where()			返回满足条件的数据</h3><h3 id="any-判断列表中是否满足某个条件，只要有一项满足就返回true"><a href="#any-判断列表中是否满足某个条件，只要有一项满足就返回true" class="headerlink" title="any()				判断列表中是否满足某个条件，只要有一项满足就返回true"></a>any()				判断列表中是否满足某个条件，只要有一项满足就返回true</h3><h3 id="every-判断是否每一项都满足条件，都满足条件才返回true"><a href="#every-判断是否每一项都满足条件，都满足条件才返回true" class="headerlink" title="every()			判断是否每一项都满足条件，都满足条件才返回true"></a>every()			判断是否每一项都满足条件，都满足条件才返回true</h3>
       
 
       
@@ -219,7 +254,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">dart</a>
         		</li>
       		
 		</ul>
@@ -275,7 +310,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/09/10/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E6%97%B6%E7%9A%84%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/09/11/Dart%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BList/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +324,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2022/09/10/Dart%E4%B8%ADString%E3%80%81Bool%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%B8%B8%E7%94%A8API/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2022/09/11/flutterApp%E7%BB%93%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Dart中String、Bool类型及其常用API
+          flutterApp结构
         
       </div>
     </a>
   
   
-    <a href="/2022/09/10/dart%E5%9C%A8vscode%E4%B8%AD%E7%9A%84%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">dart在vscode中的运行配置</div>
+    <a href="/2022/09/10/%E8%87%AA%E8%A8%80%E8%87%AA%E8%AF%AD/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">自言自语</div>
       <i class="icon-circle-right"></i>
     </a>
   
