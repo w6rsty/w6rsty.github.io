@@ -155,6 +155,95 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-通讯录管理项目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/30/%E9%80%9A%E8%AE%AF%E5%BD%95%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE/">通讯录管理项目</a>
+    </h1>
+  
+
+        
+        <a href="/2022/09/30/%E9%80%9A%E8%AE%AF%E5%BD%95%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE/" class="archive-article-date">
+  	<time datetime="2022-09-30T14:36:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="通讯录管理项目"><a href="#通讯录管理项目" class="headerlink" title="通讯录管理项目"></a>通讯录管理项目</h2><p>控制台中的清屏操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line"><span class="built_in">system</span>(<span class="string">&quot;cls&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="结构体的设计"><a href="#结构体的设计" class="headerlink" title="结构体的设计"></a>结构体的设计</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAX 1000<span class="comment">//指定联系人的数量，便于修改</span></span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">indiv</span></span><br><span class="line">&#123;</span><br><span class="line">    string name;</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line">    <span class="type">int</span> gender;<span class="comment">//1男2女，在输出时进行处理</span></span><br><span class="line">    string phone;</span><br><span class="line">    string address;</span><br><span class="line">    <span class="type">int</span> id;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">addressBooks</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">indiv</span> indivArray[MAX];</span><br><span class="line">    <span class="type">int</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改数据时的函数设计"><a href="#修改数据时的函数设计" class="headerlink" title="修改数据时的函数设计"></a>修改数据时的函数设计</h3><p>为了修改数据需要使用地址传递</p>
+<p>地址访问时用<code>book-&gt;size</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">struct</span> addressBooks * book)</span> </span>&#123;</span><br><span class="line">	book-&gt;indivArray[book-&gt;size].name = ;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">modify</span>(&amp;book);</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除联系人的实现原理"><a href="#删除联系人的实现原理" class="headerlink" title="删除联系人的实现原理"></a>删除联系人的实现原理</h3><h4 id="删除单个联系人"><a href="#删除单个联系人" class="headerlink" title="删除单个联系人"></a>删除单个联系人</h4><p>将该元素后的所有元素依次前移，覆盖该元素以实现删除的效果</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">deleteIndiv</span><span class="params">(<span class="keyword">struct</span> addressBooks * book,<span class="type">int</span> id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i =<span class="number">0</span>; i &lt; id; i++) &#123;</span><br><span class="line">         book-&gt;indivArray[id] = book-&gt;indivArray[id + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除所有"><a href="#删除所有" class="headerlink" title="删除所有"></a>删除所有</h4><p>其他功能在实现前先检查size是否为0，令<code>book-&gt;size=0</code>，逻辑上使数据无法再被访问</p>
+<h3 id="检查联系人是否存在"><a href="#检查联系人是否存在" class="headerlink" title="检查联系人是否存在"></a>检查联系人是否存在</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">isExist</span><span class="params">(<span class="keyword">struct</span> addressBooks * book, string name)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; book-&gt;size; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (book-&gt;indivArray[i].name == name) &#123;</span><br><span class="line">			<span class="keyword">return</span> i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若存在返回id，不存在返回-1，进行操作时设计一个flag判断返回是否为-1</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/09/30/%E9%80%9A%E8%AE%AF%E5%BD%95%E7%AE%A1%E7%90%86%E9%A1%B9%E7%9B%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-flutterApp结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -909,6 +998,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c++</a>
               </li>
             
             <div class="clearfix"></div>
