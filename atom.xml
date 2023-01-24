@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>w6rsty</title>
+  
+  <subtitle>My passion for CS</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2023-01-24T08:20:03.495Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>w6rsty</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello</title>
+    <link href="http://example.com/2023/01/24/Hello/"/>
+    <id>http://example.com/2023/01/24/Hello/</id>
+    <published>2023-01-24T08:09:14.000Z</published>
+    <updated>2023-01-24T08:20:03.495Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Hello"><a href="#Hello" class="headerlink" title="Hello"></a>Hello</h2><h2 id="World"><a href="#World" class="headerlink" title="World"></a>World</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Hello&quot;&gt;&lt;a href=&quot;#Hello&quot; class=&quot;headerlink&quot; title=&quot;Hello&quot;&gt;&lt;/a&gt;Hello&lt;/h2&gt;&lt;h2 id=&quot;World&quot;&gt;&lt;a href=&quot;#World&quot; class=&quot;headerlink&quot; title=&quot;Wor</summary>
+      
+    
+    
+    
+    <category term="Game eninge" scheme="http://example.com/categories/Game-eninge/"/>
+    
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+  </entry>
+  
+</feed>
