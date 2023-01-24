@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-01-24T11:50:17.621Z</updated>
+  <updated>2023-01-24T12:12:51.647Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,23 +17,27 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Announcement</title>
-    <link href="http://example.com/2023/01/24/Announcement/"/>
-    <id>http://example.com/2023/01/24/Announcement/</id>
-    <published>2023-01-24T08:09:14.000Z</published>
-    <updated>2023-01-24T11:50:17.621Z</updated>
+    <title>Land 引擎设计</title>
+    <link href="http://example.com/2023/01/24/Land-%E5%BC%95%E6%93%8E%E8%AE%BE%E8%AE%A1/"/>
+    <id>http://example.com/2023/01/24/Land-%E5%BC%95%E6%93%8E%E8%AE%BE%E8%AE%A1/</id>
+    <published>2023-01-24T12:04:21.000Z</published>
+    <updated>2023-01-24T12:12:51.647Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="A-brief-introduction-to-Land-engine"><a href="#A-brief-introduction-to-Land-engine" class="headerlink" title="A brief introduction to Land engine"></a>A brief introduction to Land engine</h2><p><img src="/2023/01/24/Announcement/avatar.jpg" alt></p><span id="more"></span>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;A-brief-introduction-to-Land-engine&quot;&gt;&lt;a href=&quot;#A-brief-introduction-to-Land-engine&quot; class=&quot;headerlink&quot; title=&quot;A brief introduction to Land engine&quot;&gt;&lt;/a&gt;A brief introduction to Land engine&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2023/01/24/Announcement/avatar.jpg&quot; alt&gt;&lt;/p&gt;</summary>
+    <content type="html"><![CDATA[<p>Land Engine参照于The Cherno的Hazel Engine</p><h2 id="EntryPoint"><a href="#EntryPoint" class="headerlink" title="- EntryPoint"></a>- EntryPoint</h2><h2 id="Application-layer"><a href="#Application-layer" class="headerlink" title="- Application layer"></a>- Application layer</h2><h2 id="Window-layer"><a href="#Window-layer" class="headerlink" title="- Window layer"></a>- Window layer</h2><h3 id="Input"><a href="#Input" class="headerlink" title="- Input"></a>- Input</h3><h3 id="Event"><a href="#Event" class="headerlink" title="- Event"></a>- Event</h3><h2 id="Renderer"><a href="#Renderer" class="headerlink" title="- Renderer"></a>- Renderer</h2><h2 id="Render-API-abstraction"><a href="#Render-API-abstraction" class="headerlink" title="- Render API abstraction"></a>- Render API abstraction</h2><h2 id="Debugging-support"><a href="#Debugging-support" class="headerlink" title="- Debugging support"></a>- Debugging support</h2><h2 id="Scripting-language"><a href="#Scripting-language" class="headerlink" title="- Scripting language"></a>- Scripting language</h2><h2 id="Memory-system"><a href="#Memory-system" class="headerlink" title="- Memory system"></a>- Memory system</h2><h2 id="Entity-component-system-ECS"><a href="#Entity-component-system-ECS" class="headerlink" title="- Entity component system(ECS)"></a>- Entity component system(ECS)</h2><h2 id="Physics"><a href="#Physics" class="headerlink" title="- Physics"></a>- Physics</h2><h2 id="File-I-O-VFS"><a href="#File-I-O-VFS" class="headerlink" title="- File I/O, VFS"></a>- File I/O, VFS</h2><h2 id="Buid-system"><a href="#Buid-system" class="headerlink" title="- Buid system"></a>- Buid system</h2>]]></content>
     
     
+      
+      
+    <summary type="html">&lt;p&gt;Land Engine参照于The Cherno的Hazel Engine&lt;/p&gt;
+&lt;h2 id=&quot;EntryPoint&quot;&gt;&lt;a href=&quot;#EntryPoint&quot; class=&quot;headerlink&quot; title=&quot;- EntryPoint&quot;&gt;&lt;/a&gt;- EntryPo</summary>
+      
     
-    <category term="Land Eninge" scheme="http://example.com/categories/Land-Eninge/"/>
     
     
-    <category term="C++" scheme="http://example.com/tags/C/"/>
+    <category term="Land Engine" scheme="http://example.com/categories/Land-Engine/"/>
+    
+    
+    <category term="C++,OpenGL,ImGui" scheme="http://example.com/tags/C-OpenGL-ImGui/"/>
     
   </entry>
   

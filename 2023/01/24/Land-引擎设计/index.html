@@ -21,16 +21,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#483D8B","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="w6rsty">
-<meta property="og:url" content="http://example.com/categories/Land-Eninge/index.html">
+  <meta name="description" content="Land Engine参照于The Cherno的Hazel Engine - EntryPoint- Application layer- Window layer- Input- Event- Renderer- Render API abstraction- Debugging support- Scripting language- Memory system- Entity compon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Land 引擎设计">
+<meta property="og:url" content="http://example.com/2023/01/24/Land-%E5%BC%95%E6%93%8E%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="w6rsty">
+<meta property="og:description" content="Land Engine参照于The Cherno的Hazel Engine - EntryPoint- Application layer- Window layer- Input- Event- Renderer- Render API abstraction- Debugging support- Scripting language- Memory system- Entity compon">
 <meta property="og:locale" content="zn_CN">
+<meta property="article:published_time" content="2023-01-24T12:04:21.000Z">
+<meta property="article:modified_time" content="2023-01-24T12:12:51.647Z">
 <meta property="article:author" content="w6rsty">
-<meta property="article:tag" content="C++, GameEngine, OpenGL, CG, Flutter, mobile application">
+<meta property="article:tag" content="C++,OpenGL,ImGui">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/categories/Land-Eninge/">
+<link rel="canonical" href="http://example.com/2023/01/24/Land-%E5%BC%95%E6%93%8E%E8%AE%BE%E8%AE%A1/">
 
 
 <script id="page-configurations">
@@ -38,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zn-CN'
   };
 </script>
 
-  <title>Category: Land Eninge | w6rsty</title>
+  <title>Land 引擎设计 | w6rsty</title>
   
 
 
@@ -190,51 +194,97 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Land Eninge
-          <small>Category</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zn-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/24/Land-%E5%BC%95%E6%93%8E%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="w6rsty">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="w6rsty">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Land 引擎设计
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-01-24 20:04:21 / Modified: 20:12:51" itemprop="dateCreated datePublished" datetime="2023-01-24T20:04:21+08:00">2023-01-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Land-Engine/" itemprop="url" rel="index"><span itemprop="name">Land Engine</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+        <p>Land Engine参照于The Cherno的Hazel Engine</p>
+<h2 id="EntryPoint"><a href="#EntryPoint" class="headerlink" title="- EntryPoint"></a>- EntryPoint</h2><h2 id="Application-layer"><a href="#Application-layer" class="headerlink" title="- Application layer"></a>- Application layer</h2><h2 id="Window-layer"><a href="#Window-layer" class="headerlink" title="- Window layer"></a>- Window layer</h2><h3 id="Input"><a href="#Input" class="headerlink" title="- Input"></a>- Input</h3><h3 id="Event"><a href="#Event" class="headerlink" title="- Event"></a>- Event</h3><h2 id="Renderer"><a href="#Renderer" class="headerlink" title="- Renderer"></a>- Renderer</h2><h2 id="Render-API-abstraction"><a href="#Render-API-abstraction" class="headerlink" title="- Render API abstraction"></a>- Render API abstraction</h2><h2 id="Debugging-support"><a href="#Debugging-support" class="headerlink" title="- Debugging support"></a>- Debugging support</h2><h2 id="Scripting-language"><a href="#Scripting-language" class="headerlink" title="- Scripting language"></a>- Scripting language</h2><h2 id="Memory-system"><a href="#Memory-system" class="headerlink" title="- Memory system"></a>- Memory system</h2><h2 id="Entity-component-system-ECS"><a href="#Entity-component-system-ECS" class="headerlink" title="- Entity component system(ECS)"></a>- Entity component system(ECS)</h2><h2 id="Physics"><a href="#Physics" class="headerlink" title="- Physics"></a>- Physics</h2><h2 id="File-I-O-VFS"><a href="#File-I-O-VFS" class="headerlink" title="- File I/O, VFS"></a>- File I/O, VFS</h2><h2 id="Buid-system"><a href="#Buid-system" class="headerlink" title="- Buid system"></a>- Buid system</h2>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-01-24T16:09:14+08:00"
-              content="2023-01-24">
-          01-24
-        </time>
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="w6rsty WeChat Pay">
+        <p>WeChat Pay</p>
       </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/01/24/Announcement/" itemprop="url">
-            <span itemprop="name">Announcement</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-    </div>
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-OpenGL-ImGui/" rel="tag"># C++,OpenGL,ImGui</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -287,6 +337,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#EntryPoint"><span class="nav-number">1.</span> <span class="nav-text">- EntryPoint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application-layer"><span class="nav-number">2.</span> <span class="nav-text">- Application layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Window-layer"><span class="nav-number">3.</span> <span class="nav-text">- Window layer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Input"><span class="nav-number">3.1.</span> <span class="nav-text">- Input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event"><span class="nav-number">3.2.</span> <span class="nav-text">- Event</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Renderer"><span class="nav-number">4.</span> <span class="nav-text">- Renderer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Render-API-abstraction"><span class="nav-number">5.</span> <span class="nav-text">- Render API abstraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging-support"><span class="nav-number">6.</span> <span class="nav-text">- Debugging support</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scripting-language"><span class="nav-number">7.</span> <span class="nav-text">- Scripting language</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-system"><span class="nav-number">8.</span> <span class="nav-text">- Memory system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Entity-component-system-ECS"><span class="nav-number">9.</span> <span class="nav-text">- Entity component system(ECS)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Physics"><span class="nav-number">10.</span> <span class="nav-text">- Physics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-I-O-VFS"><span class="nav-number">11.</span> <span class="nav-text">- File I&#x2F;O, VFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buid-system"><span class="nav-number">12.</span> <span class="nav-text">- Buid system</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
