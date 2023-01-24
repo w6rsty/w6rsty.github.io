@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello</title>
-    <url>/2023/01/24/Hello/</url>
-    <content><![CDATA[<h2 id="Hello"><a href="#Hello" class="headerlink" title="Hello"></a>Hello</h2><h2 id="World"><a href="#World" class="headerlink" title="World"></a>World</h2>]]></content>
+    <title>Announcement</title>
+    <url>/2023/01/24/Annoucement/</url>
+    <content><![CDATA[<h2 id="A-brief-introduction-to-Land-engine"><a href="#A-brief-introduction-to-Land-engine" class="headerlink" title="A brief introduction to Land engine"></a>A brief introduction to Land engine</h2><p><img src="/2023/01/24/Annoucement/avatar.jpg" alt></p>
+<span id="more"></span>
+]]></content>
       <categories>
         <category>Land Eninge</category>
       </categories>
