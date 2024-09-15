@@ -1,0 +1,27 @@
+.article {
+    background-color: #3c3836;
+    padding: 20px;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #d5c4a1;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+}
+
+/* code block */
+pre {
+    margin: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #d5c4a1;
+    border-radius: 8px;
+}
+
+pre:hover {
+    border-color: aquamarine;
+    box-shadow: 10px 10px 20px #1d2021;
+}

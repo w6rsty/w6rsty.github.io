@@ -1,0 +1,56 @@
+h1 {
+    color: #fabd2f;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+h2 {
+    color: #8ec07c;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+h3 {
+    color: #83a598;
+    font-size: large;
+}
+
+h4 {
+    color: #504945;
+    font-size: medium;
+}
+
+h5 {
+    color: #504945;
+    font-size: small;
+}
+
+p {
+    color: #ebdbb2;
+}
+
+/* list */
+li {
+    color: #ebdbb2;
+}
+
+/* inline code */
+code {
+    background: #7c6f64;
+    padding: 2px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-style: normal;
+    margin: 2px;
+}
+
+/* link */
+a {
+    color: #458588;
+    text-decoration: none;
+    font-style: italic;
+}
+
+a:hover {
+    text-decoration: underline;
+}

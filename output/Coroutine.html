@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coroutine</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="profile">
+                    <div class="avatar">
+                        <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                    </div>
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                </div>
+                <div class="contact">
+                    <h3>Contact</h3>
+                    <p>w6rsty@88.com</p>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Coroutine</h1>
+                <div class = "timestap">
+                    <p>2024-09-14</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#Cpp20</div>
+                    
+                        <div class = "tag">#coroutine</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <p>C++20的协程为非对称协程(Asymmetric Coroutine)。其中协程只能通过一个特殊的操作（通常是<code>yield</code>）来将控制权交还给调用者（协程上下文）。
+非对称协程的执行始终由调用者主动开始或恢复，然后协程在合适的时机退出，交还控制权，调用者运行调度算法再来决定是否继续运行或结束协程。</p>
+<p>协程的基本概念</p>
+<ul>
+<li>承诺对象（<code>promise_type</code>），在协程内部操控。协程通过这个对象提交结果或异常</li>
+<li>协程句柄（<code>coroutine handle</code>），在协程外部操作。用于恢复协程执行或销毁协程帧</li>
+<li>协程状态（<code>coroutine state</code>），分配于堆上的内部对象，包含：
+承诺对象
+参数（copied by value）
+挂起点
+当前挂起点的局部变量和临时值,，状态信息和堆栈指针</li>
+</ul>
+<p>协程函数的执行流程</p>
+<ul>
+<li><strong>调用协程函数</strong>：构建协程框架和 <code>promise_type</code> 对象。</li>
+<li><strong>执行到 <code>initial_suspend</code></strong>：确定协程是否挂起。</li>
+<li><strong>协程体执行</strong>：协程主体开始执行，直到第一个 <code>co_await</code> 或 <code>co_yield</code>。</li>
+<li><strong>挂起协程</strong>：在挂起点，协程暂停并返回控制权给调用者。</li>
+<li><strong>恢复协程</strong>：调用者可以通过句柄恢复协程，继续执行。</li>
+<li><strong>协程结束</strong>：当协程完成时，执行 <code>final_suspend</code>，决定如何结束和清理。</li>
+<li><strong>销毁协程</strong>：协程销毁后释放框架和资源。</li>
+</ul>
+<p>协程函数需要一个特殊的返回值类型（以<code>Result</code>为例），其中需要定义一个承诺对象（必须为<code>Result::promise_type</code>的形式，且名为<code>promise_type</code>），承诺对象需要实现一些必须的接口</p>
+<pre><code class="language-cpp">#include &lt;coroutine&gt;
+
+struct Result {
+	struct promise_type {
+		...
+	};
+	std::coroutine_handle&lt;promise_type&gt; handle;
+};
+
+// 或者
+
+struct promise;
+
+struct Result {
+	using promise_type = promise;
+	std::coroutine_handle&lt;promise_type&gt; handle;
+};
+
+struct promise {
+	...
+};
+
+</code></pre>
+<h2>协程的关键字</h2>
+<p><code>co_await</code>和<code>co_yield</code>可以挂起协程，<code>co_return</code>退出协程</p>
+<p><code>co_await</code>返回一个<code>awaiter</code>对象，可以对挂起过程中的一些细节进行控制
+<code>co_yield</code>返回一个用户定义值，你可以在<code>promise</code>对象中储存这个值，并使用<code>handle.promise().value</code>来进行访问，例如Task的寄存器上下文</p>
+<pre><code class="language-cpp">coroutine task() {
+	// do some tasks
+	co_await std::suspend_always {};
+}
+</code></pre>
+<p>编译器会做的</p>
+<pre><code class="language-cpp">corountine task() {
+	corourtine::promise_type p();
+	coroutine co_object = p.get_return_object();
+
+	try {
+		co_await p.initial_suspend();
+		
+		// do some tasks
+		co_await std::suspend_always {};
+	} catch(...) {
+		p.unhandled_exception();
+	}
+
+	co_await p.final_suspend();
+}
+</code></pre>
+<h2>awaiter</h2>
+<p>展开编译器的对于<code>co_await</code>的实现</p>
+<pre><code class="language-cpp">co_await std::suspend_always {};
+</code></pre>
+<pre><code class="language-cpp">// 之前构造的promise和coroutine object
+corourtine::promise_type p();
+coroutine co_object = p.get_return_object();
+
+auto&amp;&amp; awaiter = std::suspend_always {};
+if (!awaiter.await_ready()) {
+	awaiter.await_suspend(p.handle);
+	// leave here 
+}
+// resume here
+awaiter.resume();
+</code></pre>
+<h3>await_ready(std::coroutine_handle&lt;&gt;)</h3>
+<p><code>awaiter</code>可以理解为在<code>co_await</code>准备挂起协程时，提供了一个接口<code>await_ready</code>，<code>ready</code>指的是异步操作是否完成，来让你可以对异步操作的状态做一次检查，若异步操作在运行到此处时已经执行完成，则可以放弃挂起。这样避免了立即完成的异步操作会被直接挂起，需要等待下一次调度才能恢复</p>
+<pre><code class="language-cpp">struct awaiter {
+	bool await_ready() {
+		return check_task_state();
+	}
+};
+</code></pre>
+<h3>await_suspend()</h3>
+<p>协程在决定要挂起前，提供的一个接口，让你可以在挂起协程前做一些准备，例如，将协程句柄注册到回调、任务调度器或其他的一些异步管理机制中</p>
+<p>总是挂起</p>
+<pre><code class="language-cpp">void await_suspend(std::coroutine_handle&lt;&gt;)
+</code></pre>
+<p>返回true时挂起</p>
+<pre><code class="language-cpp">bool await_suspend(std::coroutine_handle&lt;&gt;) 
+</code></pre>
+<p>所以一个协程是否挂起需要 <strong><code>await_ready()</code></strong> 和 <strong><code>await_suspend()</code></strong> 的返回值共同决定。</p>
+<ul>
+<li><strong><code>await_ready()</code></strong>：是第一步，用于决定是否直接跳过挂起过程。如果 <code>await_ready()</code> 返回 <code>true</code>，表示异步任务已经准备好，协程不需要挂起，直接继续执行，不会调用 <code>await_suspend()</code>。</li>
+<li><strong><code>await_suspend()</code></strong>：是第二步，如果 <code>await_ready()</code> 返回 <code>false</code>，协程就会检查 <code>await_suspend()</code> 来决定是否挂起。<code>await_suspend()</code> 返回 <code>true</code> 时，协程挂起；如果返回 <code>false</code>，协程会立即恢复，不会挂起。</li>
+</ul>
+<p>挂起并恢复返回的协程</p>
+<pre><code class="language-cpp">std::coroutine_handle&lt;&gt; await_suspend(std::coroutine_handle&lt;&gt;)
+</code></pre>
+<h2>Coroutine Handle</h2>
+<p>使用<code>coroutine_handle&lt;&gt;</code>可以表示任意协程句柄
+在知道协程的类型时，<code>promise</code>对象、协程句柄和<code>raw address</code>可以进行转换</p>
+<p>promise &lt;&gt; handle</p>
+<pre><code class="language-cpp">handle = std::coroutine_handle&lt;promise_type&gt;::from_promise(promise);
+promise = handle.promise();
+</code></pre>
+<p>handle &lt;&gt; raw address</p>
+<pre><code class="language-cpp">address = handle.address();
+handle = std::coroutine_handle&lt;promise_type&gt;::from_address(address);
+</code></pre>
+<p>协程句柄还提供在外部控制协程的一些接口</p>
+<p>恢复协程</p>
+<pre><code class="language-cpp">handle.resume();
+</code></pre>
+<p>检查协程完成状态</p>
+<pre><code class="language-cpp">handle.done();
+</code></pre>
+<p>销毁句柄</p>
+<pre><code class="language-cpp">handle.destroy();
+</code></pre>
+<h2>参考</h2>
+<ul>
+<li>
+<p><a href="https://youtu.be/kIPzED3VD3w?si=Uds4iSvVORo90rYR">CppNow2023</a></p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/blizzard8204/p/17563217.html" title="发布于 2023-07-18 15:50">一篇文章搞懂 C++ 20 协程 Coroutine</a></p>
+</li>
+<li>
+<p><a href="https://en.cppreference.com/w/cpp/language/coroutines">cppreference</a></p>
+</li>
+</ul>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

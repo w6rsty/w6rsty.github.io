@@ -3,26 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>w6rsty</title>
+    <title>w6rsty's blog</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #282828;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            padding: 2px;
+            color: #fabd2f;
+            text-shadow: 10px 10px 5px #1d2021;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        li {
+            margin: 1em;
+            padding: 1em;
+            background-color: #3c3836;
+            border-radius: 0.5em;
+            box-shadow: 10px 10px 5px #1d2021;
+            transition: transform 0.1s;
+        }
+        li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            text-decoration: none;
+            color: #ebdbb2;
+        }
+    </style>
 </head>
 <body>
-    <h1>My Blog</h1>
+    <h1>w6rsty's blog</h1>
     <ul>
-        <li style="--clr:#00ade1;">
+        <li>
             <a href="浅读The Rendering Equation.html">渲染方程</a>
         </li>
-        <li style="--clr:#00ade1;">
+        <li>
             <a href="Bresenham直线算法.html">Bresenham直线算法</a>
         </li>
-        <li style="--clr:#00ade1;">
+        <li>
             <a href="重心坐标.html">重心坐标</a>
         </li>
-        <li style="--clr:#00ade1;">
+        <li>
             <a href="CMakeHelp.html">CMakeHelp</a>
         </li>
-        <li style="--clr:#00ade1;">
+        <li>
             <a href="Transformation变换.html">Transformation变换</a>
+        </li>
+        <li>
+            <a href="output/Coroutine.html">Coroutine</a>
         </li>
     </ul>
 
