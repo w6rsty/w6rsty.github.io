@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendering Pipeline</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Rendering Pipeline</h1>
+                <div class = "timestap">
+                    <p>2024-09-06</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#render</div>
+                    
+                        <div class = "tag">#math</div>
+                    
+                        <div class = "tag">#graphics</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>Rendering Pipeline</h1>
+<p>VertexInput -&gt; Vertex Assembly -&gt; VertexOperation -&gt;
+Primitive Assembly -&gt;
+Rasterization -&gt; FragmentOperation -&gt; Depth Write</p>
+<h2>Look To</h2>
+<p>用于对世界空间中的顶点进行变换，以相机的视角向世界空间中一个方向旋转</p>
+<pre><code class="language-cpp">Mat&lt;4, 4, T&gt; LookTo(const Vec3&amp; eye, const Vec3&amp; dir, const Vec3&amp; up);
+</code></pre>
+<p>利用相对的思想，将相机移动到原点并构建坐标系，让世界相对相机旋转，再将相机移回原来的位置，最后求得这些变换的逆即可，这分为了平移和旋转两部分</p>
+<p>先考虑旋转，根据线性代数基的变换，用一些相互正交的向量定义一个线性空间，并作为基向量构成一个矩阵，用这个矩阵相乘即可将向量变换到这个线性空间中.
+我们可以利用这里的<code>dir</code>,<code>up</code>使用<a href="https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process">Gram-Schmidt Process</a>来构建一个三维的坐标系，并用这三个轴作为基向量构建变换矩阵.</p>
+<pre><code class="language-cpp">Vec3 F = Normalized(dir);
+Vec3 R = Normalized(Cross(F, up));
+Vec3 U = Normalized(Cross(R, F));
+
+Mat&lt;4, 4, T&gt; {
+	R.x, U.x, -F.x, 0,
+	R.y, U.y, -F.y, 0,
+	R.z, U.z, -F.z, 0,
+	  0,   0,    0, 1
+}
+</code></pre>
+<p>注意，相机使用右手坐标系，但是对准的是<code>-Z</code>方向，这里需要反转<code>F</code>的方向来构建右手坐标系</p>
+<p>平移就很简单了</p>
+<pre><code class="language-cpp">Mat&lt;4, 4, T&gt; {
+	1, 0, 0, eye.x,
+	0, 1, 0, eye.y,
+	0, 0, 1, eye.z,
+	0, 0, 0,     1
+}
+</code></pre>
+<p>最后对这两个变换求逆并合并
+$M_{lookat}= M_{R}^{-1}M_{T}^{-1}$
+旋转矩阵的逆等于转置</p>
+<pre><code class="language-cpp">Mat&lt;4, 4, T&gt; {
+	 R.x,  R.y,  R.z, -Dot(R,  eye),
+	 U.x,  U.y,  U.z, -Dot(U,  eye),
+	-F.x, -F.y, -F.z, -Dot(-F, eye),
+	   0,    0,    0,             1
+};
+</code></pre>
+<h2>Perspective Projection</h2>
+<p>Eye space -&gt; Projection transform -&gt; Clip space -&gt; Homogeneous division -&gt; NDC</p>
+<p><img src="http://www.songho.ca/opengl/files/gl_projectionmatrix01.png" alt="Perspective Frustum and Normalized Device Coordinates (NDC)" /></p>
+<p>通过透视投影，将相机空间(Camera space or Eye Space)变换到裁剪空间(Clip space)，在视锥剔除(Frustum Culling)后，进行齐次除法(Homogeneous Division)，就变换到了NDC空间(Normalized Device Coordinates or Canonical View Volume)，可以理解为将视锥压缩为一个标准立方体
+注意相机空间使用的是<strong>右手系</strong>，在NDC空间中则是<strong>左手系</strong></p>
+<p>先考虑<code>X</code>,<code>Y</code>方向，利用三角形相似得到投影在近平面上的坐标</p>
+<div class="container">
+	<img src="http://www.songho.ca/opengl/files/gl_projectionmatrix03.png" alt="Top view of frustum" width = 320px>
+	<img src="http://www.songho.ca/opengl/files/gl_projectionmatrix04.png" = alt="Side view of frustum" width = 320px>
+</div>
+<p>$$
+\begin{align}
+x_p=-\frac{n}{z_e}x_e\
+y_p=-\frac{n}{z_e}y_e
+\end{align}
+$$</p>
+<p>可以发现 $x_p$ 和 $y_p$ 都与 $-z_e$ 成反比</p>
+<p>接下来是将近平面上点的坐标映射到 $[-1,1]^2$ ，即映射到NDC空间</p>
+<div class=“container”>
+	<img src="http://www.songho.ca/opengl/files/gl_projectionmatrix05.png" width=320px>
+	<img src="http://www.songho.ca/opengl/files/gl_projectionmatrix06.png" width=320px>
+</div>
+<p>$$
+\begin{align}
+x_n=\frac{2}{r-l}x_p-\frac{r+l}{r-l}\
+y_n=\frac{2}{t-b}y_p-\frac{t+b}{t-b}
+\end{align}
+$$</p>
+<p>代入投影坐标可以得到</p>
+<p>$$
+x_n=\frac{2nx_e}{r-l}/(-z_e)-\frac{r+l}{r-l}=(\frac{2nx_e}{r-l}+\frac{r+l}{r-l}z_e)/(-z_e)
+$$</p>
+<p>$$
+y_n=\frac{2ny_e}{t-b}/(-z_e)-\frac{t+b}{t-b}=(\frac{2ny_e}{t-b}+\frac{t+b}{t-b}z_e)/(-z_e)
+$$</p>
+<p>注意这里已经是齐次除法之后的坐标了，我们需要利用其特性来反推透视矩阵是如何将相机空间变换到裁剪空间的</p>
+<p>$$
+V_{clip}=M_{PerspProj}V_e=\begin{bmatrix}
+a&amp;b&amp;c&amp;d\
+e&amp;f&amp;g&amp;h\
+i&amp;j&amp;k&amp;l\
+m&amp;n&amp;o&amp;p
+\end{bmatrix}
+\begin{bmatrix}
+\color{red}{x_e}\
+\color{green}{y_e}\
+\color{blue}{z_e}\
+w_e
+\end{bmatrix}=\begin{bmatrix}
+a\textcolor{red}{x_e}+b\textcolor{green}{y_e}+c\textcolor{blue}{z_e}+dw_e\
+e\textcolor{red}{x_e}+f\textcolor{green}{y_e}+g\textcolor{blue}{z_e}+hw_e\
+i\textcolor{red}{x_e}+j\textcolor{green}{y_e}+k\textcolor{blue}{z_e}+lw_e\
+m\textcolor{red}{x_e}+n\textcolor{green}{y_e}+o\textcolor{blue}{z_e}+pw_e\
+\end{bmatrix}
+$$</p>
+<p>齐次除法后</p>
+<p>$$
+V_n=V_{clip}/w_{clip}=\begin{bmatrix}
+x_{clip}/w_{clip}\
+y_{clip}/w_{clip}\
+z_{clip}/w_{clip}\
+1
+\end{bmatrix}
+$$</p>
+<p>依据上文推导的关系式，可以初步化简与<code>z</code>分量无关的部分，其中相机空间中 $w_e=1$</p>
+<p>$$
+V_{clip}=\begin{bmatrix}
+a&amp;0&amp;c&amp;0\
+0&amp;f&amp;g&amp;0\
+0&amp;0&amp;k&amp;l\
+0&amp;0&amp;o&amp;p
+\end{bmatrix}
+\begin{bmatrix}
+\color{red}{x_e}\
+\color{green}{y_e}\
+\color{blue}{z_e}\
+w_e
+\end{bmatrix}=\begin{bmatrix}
+a\textcolor{red}{x_e}+c\textcolor{blue}{z_e}\
+f\textcolor{green}{y_e}+g\textcolor{blue}{z_e}\
+k\textcolor{blue}{z_e}+l\
+o\textcolor{blue}{z_e}+p\
+\end{bmatrix}
+$$</p>
+<p>到这一步可以观察到 $a\textcolor{red}{x_e}+c\textcolor{blue}{z_e}$ 与 $x_n$ 的形式很接近了，只相差一个被除数 $-z_e$ ，而在齐次除法中正是要除以 $w_{clip}$ ，所以将 $w_{clip}$ 设为$-z_e$
+借助这个关系还可以将第四行也全部确定</p>
+<p>$$
+V_{clip}=\begin{bmatrix}
+\frac{2n}{r-l}&amp;0&amp;\frac{r+l}{r-l}&amp;0\
+0&amp;\frac{2n}{t-b}&amp;\frac{t+b}{t-b}&amp;0\
+0&amp;0&amp;k&amp;l\
+0&amp;0&amp;-1&amp;0
+\end{bmatrix}
+\begin{bmatrix}
+\color{red}{x_e}\
+\color{green}{y_e}\
+\color{blue}{z_e}\
+w_e
+\end{bmatrix}=\begin{bmatrix}
+a\textcolor{red}{x_e}+c\textcolor{blue}{z_e}\
+f\textcolor{green}{y_e}+g\textcolor{blue}{z_e}\
+k\textcolor{blue}{z_e}+l\
+1
+\end{bmatrix}
+$$</p>
+<p>现在来单独解决第三行</p>
+<p>$$
+z_n=\frac{z_{clip}}{w_c}=\frac{kz_e+lw_e}{-z_e}=-k-\frac{l}{z_e}
+$$</p>
+<p>使用近平面中心<code>(0, 0, -n, 1)</code>和远平面中<code>(0, 0, -f, 1)</code>两个与<code>x</code>,<code>y</code>无关的特殊点构造方程组来求解</p>
+<p>$$
+\begin{align}
+-1=-k-\frac{l}{-n}\
+1=-k-\frac{l}{-f}
+\end{align}
+$$</p>
+<p>解得</p>
+<p>$$
+\begin{align}
+k=\frac{n+f}{n-f}\
+l=\frac{2nf}{n-f}
+\end{align}
+$$</p>
+<p>最终得到</p>
+<p>$$
+M_{PerpProj}
+\begin{bmatrix}
+\frac{2n}{r-l}&amp;0&amp;\frac{r+l}{r-l}&amp;0\
+0&amp;\frac{2n}{t-b}&amp;\frac{t+b}{t-b}&amp;0\
+0&amp;0&amp;\frac{n+f}{n-f}&amp;\frac{2nf}{n-f}\
+0&amp;0&amp;-1&amp;0
+\end{bmatrix}
+$$</p>
+<p>如果使用Vertical field of view, Aspect ratio和near， far来定义
+首先有</p>
+<p>$$
+\begin{align}
+r+l=0\
+t+b=0\
+\frac{t}{n}=tan\frac{\theta}{2}\
+\frac{r}{t}=aspect
+\end{align}
+$$</p>
+<p>化简后</p>
+<p>$$
+M_{PerpProj}
+\begin{bmatrix}
+\frac{1}{tan\frac{\theta}{2}aspect}&amp;0&amp;0&amp;0\
+0&amp;\frac{1}{tan\frac{\theta}{2}}&amp;0&amp;0\
+0&amp;0&amp;\frac{n+f}{n-f}&amp;\frac{2nf}{n-f}\
+0&amp;0&amp;-1&amp;0
+\end{bmatrix}
+$$</p>
+<h2>Orthographic Projection</h2>
+<p><img src="http://www.songho.ca/opengl/files/gl_projectionmatrix02.png" alt="Orthographic volume and Normalized Device Coordinates" /></p>
+<p>正交投影并不会产生齐次坐标，所以 $V_n=V_c$ , $w_e=w_c=1$</p>
+<p>$$
+V_{clip}=M_{OrthoProj}V_e \begin{bmatrix}
+a&amp;b&amp;c&amp;d\
+e&amp;f&amp;g&amp;h\
+i&amp;j&amp;k&amp;l\
+m&amp;n&amp;o&amp;p
+\end{bmatrix}
+\begin{bmatrix}
+\color{red}{x_e}\
+\color{green}{y_e}\
+\color{blue}{z_e}\
+1
+\end{bmatrix}=\begin{bmatrix}
+a\textcolor{red}{x_e}+b\textcolor{green}{y_e}+c\textcolor{blue}{z_e}+d\
+e\textcolor{red}{x_e}+f\textcolor{green}{y_e}+g\textcolor{blue}{z_e}+h\
+i\textcolor{red}{x_e}+j\textcolor{green}{y_e}+k\textcolor{blue}{z_e}+l\
+m\textcolor{red}{x_e}+n\textcolor{green}{y_e}+o\textcolor{blue}{z_e}+p\
+\end{bmatrix}
+$$</p>
+<p>直接由相机空间向NDC空间的映射着手</p>
+<div class="container">
+	<img src="http://www.songho.ca/opengl/files/gl_projectionmatrix08.png" width=220px>
+	<img src="http://www.songho.ca/opengl/files/gl_projectionmatrix09.png" width=220px>
+	<img src="http://www.songho.ca/opengl/files/gl_projectionmatrix10.png" width=220px>
+</div>
+<p>$$
+x_n=\frac{2}{r-l}x_e-\frac{r+l}{r-l}
+$$</p>
+<p>$$
+y_n=\frac{2}{t-b}y_e-\frac{t+b}{t-b}
+$$</p>
+<p>$$
+z_n=-\frac{2}{f-n}y_e-\frac{f+n}{f-n}
+$$</p>
+<p>得到</p>
+<p>$$
+M_{OrthoProj}=\begin{bmatrix}
+\frac{2}{r-l}&amp;0&amp;0&amp;-\frac{r+l}{r-l}\
+0&amp;\frac{2}{t-b}&amp;0&amp;-\frac{t+b}{t-b}\
+0&amp;0&amp;\frac{2}{f-n}&amp;-\frac{f+n}{f-n}\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}
+$$</p>
+<p>若坐标是对称的，可以化为更简单的形式</p>
+<p>$$
+M_{OrthoProj}=\begin{bmatrix}
+\frac{1}{r}&amp;0&amp;0&amp;0\
+0&amp;\frac{1}{t}&amp;0&amp;0\
+0&amp;0&amp;\frac{2}{f-n}&amp;-\frac{f+n}{f-n}\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}
+$$</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embassy Notes</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Embassy Notes</h1>
+                <div class = "timestap">
+                    <p>2024-06-11</p>
+                    <p>最后编辑于：2024-06-29</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#async</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>Async Rust in Embedded Systems with Embassy - Dario Nieuwenhuis</h1>
+<p><a href="https://www.youtube.com/watch?v=H7NtzyP9q8E">Youtube</a>
+<a href="https://github.com/embassy-rs/embassy">Github repo</a></p>
+<p>预先静态分配任务，使用链表组织任务队列
+可以参考<code>#[embassy_excutor::task]</code>的设计</p>
+<p>通常的实现
+![[assets/截屏2024-06-11 21.54.42.png]]
+then(OS epoll driven)</p>
+<pre><code class="language-rust">loop {
+	Poll Woken tasks
+	Wait on epoll() with FDs fron Reactor
+	Wake tasks with FDs that became ready
+}
+</code></pre>
+<p>But</p>
+<ul>
+<li>can't use alloc</li>
+<li>must avoid dangling pointers from wakers</li>
+<li>no OS</li>
+</ul>
+<p>=&gt; So statically allocate tasks
+![[assets/截屏2024-06-11 21.59.39.png]]
+Use an intrusive linked list</p>
+<p>![[assets/截屏2024-06-11 22.03.11.png]]
+这里<code>my_task</code>不返回<code>Future</code>。
+<code>SpawnToken</code>是指向已初始化任务的指针</p>
+<p>![[assets/截屏2024-06-11 23.01.44.png]]</p>
+<p>中断驱动任务运行
+![[assets/截屏2024-06-11 23.02.12.png]]</p>
+<p>No reactor!</p>
+<p>![[assets/截屏2024-06-11 23.07.52.png]]Current solution: Just don't do that :)</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Lua into C++</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Embed Lua into C++</h1>
+                <div class = "timestap">
+                    <p>2024-08-05</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#Lua</div>
+                    
+                        <div class = "tag">#Cpp</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h2>构建Lua执行上下文</h2>
+<p>创建与销毁</p>
+<pre><code class="language-cpp">lua_State* L = luaL_newstate();
+
+lua_close(L);
+</code></pre>
+<h2>C调用lua</h2>
+<pre><code class="language-lua">function add(a, b)
+	return a + b
+end
+</code></pre>
+<pre><code class="language-cpp">// 将函数推至栈顶
+lua_getglobal(L, "add")
+// 传参
+lua_pushnumber(L, a);
+lua_pushnumber(L, b);
+// 调用
+lua_call(L, 2, 1);
+// 获取返回值
+lua_Number c = lua_tonumber(L, -1);
+</code></pre>
+<h2>lua调用C</h2>
+<pre><code class="language-cpp">int add(lua_State* L) {
+	lua_Number a = lua_tonumber(L, -2);
+	lua_Number b = lua_tonumber(L, -1);
+	lua_Number c = a + b;
+	lua_pushnumber(L, c);
+}
+</code></pre>
+<pre><code class="language-lua">add(1, 2)
+</code></pre>
+<pre><code class="language-cpp">lua_pushcfunction(L, add);
+lua_setglobal(L, "add");
+</code></pre>
+<p>注册函数的语法糖</p>
+<pre><code class="language-cpp">lua_register(L, "add", add);
+</code></pre>
+<p>这个宏实际是对上面两个调用的简写</p>
+<h2>table</h2>
+<p>例如</p>
+<pre><code class="language-lua">x = { name = "w6rsty", age = 18 }
+</code></pre>
+<p>获取字段</p>
+<pre><code class="language-cpp">lua_getglobal(L, "x");
+lua_pushtring(L, "name");
+lua_gettable(L, -2);
+const char* name = lua_tostring(L, -1);
+// 注意push的string键还在栈上，继续访问需要先pop
+
+lua_getglobal(L, "x");
+lush_pushstring(L, "age");
+lua_gettable(L, -2);
+lua_Number age = lua_tonumber(L, -1);
+</code></pre>
+<p>lua CAPI也提供了语法糖</p>
+<pre><code class="language-cpp">lua_getglobal(L, "x");
+lua_getfield(L, -1, "name");
+</code></pre>
+<p>写入字段</p>
+<pre><code class="language-cpp">lua_getglobal(L, "x");
+lua_pushstring(L, "coding");
+lua_setfield(L, -2, "status");
+</code></pre>
+<h2>MetaTables &amp; MetaMethods</h2>
+<p>我们想要实现这样的操作</p>
+<pre><code class="language-lua">v1 = CreateVector()
+v2 = CreateVector()
+v1.x = 12
+v1.y = 31
+v3 = v1 + v3
+</code></pre>
+<p>其中v1,v2,v3是table</p>
+<p>通过定义MetaTable和MetaMethods，可以进行table间的操作</p>
+<pre><code class="language-cpp">struct Vector {
+    static int Create(lua_State* L) {
+        lua_newtable(L);
+        lua_pushstring(L, "x");
+        lua_pushnumber(L, 0);
+        lua_settable(L, -3);
+
+		// y
+
+        luaL_getmetatable(L, "VectorMetaTable");
+        lua_setmetatable(L, -2);
+        return 1;
+    }
+
+    static int __add(lua_State* L) {
+        lua_pushstring(L, "x");
+        lua_gettable(L, -3);
+        lua_Number xLeft = lua_tonumber(L, -1);
+        lua_pop(L, 1);
+
+        // yLeft
+        // xRight
+        // yRight
+
+        Vector::Create(L);
+        lua_pushstring(L, "x");
+        lua_pushnumber(L, xLeft + xRight);
+        lua_rawset(L, -3);
+        lua_pushstring(L, "y");
+        lua_pushnumber(L, yLeft + yRight);
+        lua_rawset(L, -3);
+        return 1;
+    }
+}
+</code></pre>
+<p>此处在创建新的<code>Vector</code>时使用<code>lua_rawset</code>，不会在metatable中查找，避免循环调用</p>
+<pre><code class="language-cpp">lua_pushcfunction(L, Vector::Create);
+lua_setglobal(L, "CreateVector");
+
+luaL_newmetatable(L, "VectorMetaTable");
+lua_pushstring(L, "__add");
+lua_pushcfunction(L, Vector::__add);
+lua_settable(L, -3);
+</code></pre>
+<p>lua中metatable里特殊的键，名称使用<code>__</code>开头
+http://lua-users.org/wiki/MetatableEvents</p>
+<h2>Calling Constructor &amp; Deconstructor</h2>
+<h3>Constructor</h3>
+<p>要注意到<code>lua_newuserdata</code>只是分配对应结构的大小，返回内存起始点的指针，为了调用构造函数，需要使用<code>placement new</code>，在指针指向的位置进行构造</p>
+<pre><code class="language-cpp">#include &lt;new&gt; //注意引入头文件
+auto CreateSprite = [](lua_State* L) -&gt; int {
+	void* ptr = lua_newuserdata(L, sizeof(Sprite));
+	new (ptr) Sprite();
+	return 1;
+};
+</code></pre>
+<p>userdata类型数据的内存分配由lua负责，并使用gc进行回收
+这也意味着在gc时不会主动调用类的析构函数，需要手动在lua回收时的metamethod中进行调用</p>
+<h3>Deconstructor</h3>
+<p>在<code>__gc</code>中调用析构
+首先在创建时添加一个metatable，所有对象都共用这个表</p>
+<pre><code class="language-cpp">auto CreateSprite = [](lua_State* L) -&gt; int {
+	void* ptr = lua_newuserdata(L, sizeof(Sprite));
+	new (ptr) Sprite();
+	
+	luaL_getmetatable(L, "SpriteMetaTable");
+	lua_setmetatable(L, -2);
+	return 1;
+};
+</code></pre>
+<pre><code class="language-cpp">auto DestroySprite = [](lua_State* L) -&gt; int {
+	Sprite* ptr = static_cast&lt;Sprite*&gt;(lua_touserdata(L, -1));
+	ptr-&gt;~Sprite();
+	return 0;
+};
+
+luaL_newmetatable(L, "SpriteMetaTable");
+lua_pushstring(L, "__gc");
+lua_pushcfunction(L, DestroySprite);
+lua_settable(L, -3);
+</code></pre>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

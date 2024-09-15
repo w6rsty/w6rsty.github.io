@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileSystem</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>FileSystem</h1>
+                <div class = "timestap">
+                    <p>2024-06-09</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#OS</div>
+                    
+                        <div class = "tag">#FileSystem</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>FileSystem</h1>
+<p>进程控制块中会维护一个打开文件表</p>
+<p>如<code>xv6</code>中的<a href="https://github.com/mit-pdos/xv6-riscv/blob/f5b93ef12f7159f74f80f94729ee4faabe42c360/kernel/proc.h#L104"><code>ofile</code></a></p>
+<pre><code class="language-c">struct proc {
+	...
+	struct file *ofile[NOFILE];  // Open files
+	...
+};
+</code></pre>
+<p><code>rCore ch6</code>中的<a href="https://github.com/rcore-os/rCore-Tutorial-v3/blob/b100bcb0ed0c1c15c99240fd19d94cc26eabef0f/os/src/task/task.rs#L32"><code>fd_table</code></a></p>
+<pre><code class="language-rust">pub struct TaskControlBlockInner {
+	...
+    pub fd_table: Vec&lt;Option&lt;Arc&lt;dyn File + Send + Sync&gt;&gt;&gt;,
+}
+</code></pre>
+<h2>File Descriptor</h2>
+<p>按照约定，前三个fd会分配给<code>STDIN(0)</code>, <code>STDOUT(1)</code>, <code>STDERR(2)</code></p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

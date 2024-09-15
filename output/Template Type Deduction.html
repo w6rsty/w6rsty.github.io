@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Type Deduction</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Template Type Deduction</h1>
+                <div class = "timestap">
+                    <p>2024-09-12</p>
+                    <p>最后编辑于：2024-09-13</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#Cpp</div>
+                    
+                        <div class = "tag">#template</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <pre><code class="language-cpp">template &lt;typename T&gt;
+void f(ParamType param);
+</code></pre>
+<p>模版类型推断</p>
+<ol>
+<li>如果<code>expr</code>是引用，忽略引用部分</li>
+<li>使用<code>expr</code>的类型去匹配<code>ParamType</code>，确定<code>ParamType</code>和模板类型<code>T</code></li>
+</ol>
+<p>若<code>ParamType</code>是<code>T&amp;</code>，<code>T</code>会按照<code>expr</code>的类型推导
+若<code>ParamType</code>是<code>const T&amp;</code>，<code>T</code>会被推导为常量类型</p>
+<p>指针类型的推导相同</p>
+<p>万能引用（Universal reference）</p>
+<ul>
+<li>若<code>expr</code>为左值，会推导为左值引用</li>
+<li>若<code>expr</code>是右值，则还是右值</li>
+</ul>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

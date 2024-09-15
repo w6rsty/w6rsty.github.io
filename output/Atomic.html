@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atomic</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Atomic</h1>
+                <div class = "timestap">
+                    <p>2024-06-01</p>
+                    <p>最后编辑于：2024-09-13</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#Rust</div>
+                    
+                        <div class = "tag">#concurrency</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <p>提供了能在线程间使用的共享内存类型
+为基本类型提供了原子版本
+<code>AtomicBool</code>,<code>AtomicUsize</code>,<code>AtomicI8</code>,<code>AtomicU16</code>,etc.
+在正确使用时，更改会在线程间同步</p>
+<h2>原子访问的内存模型</h2>
+<p>目前使用和<code>C++20 atomics</code>一样的规则</p>
+<p>每个方法接受一个<code>Ordering</code>，代表该操作内存屏障的强度
+<code>Ordering</code>有<code>Release</code>,<code>Acquire</code>,<code>Relaxed</code>,<code>SeqCst</code>,<code>AcqRel</code></p>
+<h3><code>Relaxed</code></h3>
+<p>最弱的内存序，表示对这次操作没有任何同步或者顺序的要求。这种方式只保证原子操作的读写不会被重排序。</p>
+<h3><code>Acquire/Release</code></h3>
+<p><code>Acquire</code>/<code>Relase</code>通常配合使用，用于在线程间传递数据。</p>
+<ul>
+<li><code>Acquire</code>用于原子操作的读取部分，保证在此操作之后的所有内存读写不能被重排序到这个操作之前。通常用于加载操作。</li>
+<li><code>Release</code>用于原子操作的写入部分，保证在此操作之前的所有内存读写不能被重排序到这个操作之后。通常用于存储操作。</li>
+</ul>
+<pre><code class="language-rust">let ready = AtomicBool::new(false);
+
+let producer = thread::spawn(move || {
+	ready.store(true, Ordering::Release);
+});
+
+let consumer = thread::spawn(move || {
+	while !read.load(Ordering::Acquire) {
+		// waiting for data
+	}
+	// use data
+});
+</code></pre>
+<h3><code>SeqCst</code></h3>
+<p>最强的内存序，代表<strong>顺序一致性(Sequential Consistency)</strong>。这种方式要求保证所有原子操作都按照程序的书写顺序执行。</p>
+<h3><code>AcqRel</code></h3>
+<p><code>Acquire/Release</code>的结合
+常用于读-修改-写操作，如(fetch_add, compare_and_swap)</p>
+<pre><code class="language-rust">let atomic_counter = AtomicUsize::new(0);
+
+let mut handles = vec![];
+for _ in 0..10 {
+	let handle = thread::spawn(move || {
+		let counter = &amp;atomic_counter;
+		move || {
+			for _ in 0..10 {
+				counter.fetch_add(1, Ordering::AcqRel);
+			}
+		}
+	});
+	handles.push(handle);
+}
+</code></pre>
+<p>https://doc.rust-lang.org/std/sync/atomic/
+https://doc.rust-lang.org/nomicon/atomics.html</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtyping and Variance</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Subtyping and Variance</h1>
+                <div class = "timestap">
+                    <p>2024-05-27</p>
+                    <p>最后编辑于：2024-06-09</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#Rust</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h2>子类型</h2>
+<p>在 Rust 中，子类型是针对生命周期存在的。生命周期是代码的作用域，所以我们可以根据它们相互包含的关系判断他们的继承关系。</p>
+<p>生命周期的子类型指: 如果<code>'big: 'small</code>，那么<code>'big</code>就是<code>'small</code>的子类型</p>
+<p>可以把<code>'static</code>看作是所有生命周期的子类型</p>
+<p>https://learnku.com/docs/nomicon/2018/38-subtypes-and-variability/4719
+https://doc.rust-lang.org/nomicon/subtyping.html</p>
+<h2>变性</h2>
+<p>变性是类型构造函数与它的参数相关的一个属性。Rust中的类型构造函数是一个带有无界参数的通用类型</p>
+<p>There are three kinds of variance in Rust. Given two types <code>Sub</code> and <code>Super</code>, where <code>Sub</code> is a subtype of <code>Super</code>:</p>
+<ul>
+<li><code>F</code> is <strong>covariant</strong> if <code>F&lt;Sub&gt;</code> is a subtype of <code>F&lt;Super&gt;</code> (the subtype property is passed through)</li>
+<li><code>F</code> is <strong>contravariant</strong> if <code>F&lt;Super&gt;</code> is a subtype of <code>F&lt;Sub&gt;</code> (the subtype property is "inverted")</li>
+<li><code>F</code> is <strong>invariant</strong> otherwise (no subtyping relationship exists)</li>
+</ul>
+<h3>协变性（Covariance）</h3>
+<p>如果类型 <code>T&lt;'a&gt;</code> 是协变的，那么对于生命周期 <code>'a</code> 和 <code>'b</code>，只要 <code>'a: 'b</code>（<code>'a</code> 比 <code>'b</code> 长），就有 <code>T&lt;'a&gt;: T&lt;'b&gt;</code>。简单地说，协变意味着可以安全地将生命周期替换为更长的生命周期。</p>
+<pre><code class="language-rust">struct Example&lt;'a&gt; { 
+	reference: &amp;'a str,
+}
+</code></pre>
+<p>这里，<code>Example&lt;'a&gt;</code> 是协变的，因为如果 <code>'a</code> 的生命周期变长，<code>Example&lt;'a&gt;</code> 仍然是有效的。</p>
+<h3>Contravariant（逆变性）</h3>
+<p>逆变性与协变性相反。如果类型 <code>T&lt;'a&gt;</code> 是逆变的，那么对于生命周期 <code>'a</code> 和 <code>'b</code>，只要 <code>'a: 'b</code>（<code>'a</code> 比 <code>'b</code> 长），就有 <code>T&lt;'b&gt;: T&lt;'a&gt;</code>。</p>
+<h3>Invariant（不变性）</h3>
+<p>不变性则意味着类型不能因为生命周期的变化而安全地替换。对于某些类型参数，它们既不是协变的，也不是逆变的，称为不变性。</p>
+<p>| |'a|T|U|
+|-|-|-|-|
+|<code>&amp;'a T</code>|covariant|covariant||
+|<code>&amp;'a mut T</code>|covariant|invariant||
+|<code>Box&lt;T&gt;</code>||covariant||
+|<code>Vec&lt;T&gt;</code>||covariant||
+|<code>UnsafeCell&lt;T&gt;</code>||invariant||
+|<code>Cell&lt;T&gt;</code>||invariant||
+|<code>fn(T) -&gt; U</code>||<strong>contra</strong>variant|covariant |
+|<code>*const T</code>||covariant||
+|<code>*mut T</code>||invariant||</p>
+<p>https://doc.rust-lang.org/nomicon/subtyping.html</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进程创建</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>进程创建</h1>
+                <div class = "timestap">
+                    <p>2024-06-07</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#umi</div>
+                    
+                        <div class = "tag">#进程</div>
+                    
+                        <div class = "tag">#OS</div>
+                    
+                        <div class = "tag">#Rust</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>创建流程</h1>
+<ol>
+<li>在<code>main.rs</code>中使用程序名称调用<code>InitTask::from_elf</code>加载程序，得到任务的基本构造信息<code>InitTask</code></li>
+</ol>
+<pre><code class="language-rust">pub async fn from_elf(
+	parent: Weak&lt;Task&gt;,
+	file: Phys,
+	virt: Pin&lt;Arsc&lt;Virt&gt;&gt;,
+	lib_path: Vec&lt;&amp;Path&gt;,
+	args: Vec&lt;String&gt;,
+) -&gt; Result&lt;Self, Error&gt;；
+
+pub struct InitTask {
+	main: Weak&lt;Task&gt;,
+	parent: Weak&lt;Task&gt;,
+	virt: Pin&lt;Arsc&lt;Virt&gt;&gt;,
+	tf: TrapFrame,
+	files: Files,
+}
+</code></pre>
+<ol start="2">
+<li>调用<code>InitTask</code>的<code>spawn</code>方法，分配task id，根据信息创建<code>Task</code>和<code>TaskState</code>
+然后放入任务队列</li>
+</ol>
+<pre><code class="language-rust">ksync::critical(|| TASKS.lock().insert(tid, task.clone()));
+
+let fut = TaskFut::new(ts.virt.clone(), user_loop(ts, self.tf));
+
+executor().spawn(fut).detach();
+</code></pre>
+<p>创建任务的<code>TaskFut</code>后，使用<a href="https://docs.rs/async-task/latest/async_task/struct.Task.html#method.detach">async_task::Task::detach</a>分离此Future。意思是这个Future会放在后台执行，当前的async块无需等待此Future的完成</p>
+<p>这里的<code>spawn</code>是对<a href="https://docs.rs/async-task/latest/async_task/fn.spawn.html#">async_task::spawn</a>的一个包装，其内部会由<code>async_task::spawn</code>返回一个<code>Runnable</code>和<code>async_task::Task</code>(<code>Runnable</code>用于<code>poll</code>Future， <code>async_task::Task</code>用于等待返回)，并会调用<code>Runnable</code>的<code>schedule</code>方法将这个任务放入<code>async_task</code>的调度队列。最后只返回<code>async_task::Task</code>。</p>
+<p><code>Runnable</code>还提供了<code>run()</code>来立即进行一次<code>poll</code>，在任务被调度实际执行时会使用。</p>
+<blockquote>
+<p>Method <code>run()</code> polls the task’s future once. Then, the <code>Runnable</code>vanishes and only reappears when its <code>Waker</code> wakes the task, thus scheduling it to be run again.</p>
+</blockquote>
+<p>注意这里的<code>async_task::Task</code>和<code>Task</code>并不一致，每次使用<code>spawn</code>得到的<code>async_task::Task</code>都会立即调用<code>async_task::Task::detach</code>消耗掉。也就是说我们不会等待<code>async_task::Task</code>，只使用了async_task的调度功能。</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

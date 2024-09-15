@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>register</h1>
+                <div class = "timestap">
+                    <p>2024-06-28</p>
+                    <p>最后编辑于：2024-07-01</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#RISC-V</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <ol>
+<li><code>x0</code>：零(hardwired zero)寄存器，通常被用作常量0。</li>
+<li><code>x1</code>：<code>ra</code>，返回地址(return address)寄存器，用于存储函数返回地址。</li>
+<li><code>x2</code>：<code>sp</code>，栈指针(stack pointer)寄存器，指向当前栈顶。</li>
+<li><code>x3</code>：<code>gp</code>，全局指针(global pointer)寄存器，通常指向全局数据区。</li>
+<li><code>x4</code>：<code>tp</code>，线程指针(thread pointer)寄存器，用于线程局部存储。</li>
+<li><code>x5~x7</code>：<code>t0~t2</code>，临时(temporary)寄存器，用于存储临时数据。</li>
+<li><code>x8</code>：<code>s0/fp</code>，保存(saved)寄存器，也称为帧指针(frame pointer)，用于保存函数调用时的上下文信息。</li>
+<li><code>x9</code>：<code>s1</code>，保存(saved)寄存器，用于保存 s0 的备份。</li>
+<li><code>x10~x11</code>：<code>a0~a1</code>，参数/返回值(function argument/return value)寄存器，用于存储函数参数。</li>
+<li><code>x12~x17</code>：<code>a2~a7</code>，参数(function argument)寄存器，用于存储函数参数。</li>
+<li><code>x18~x27</code>：<code>s2~s11</code>，保存(saved)寄存器，用于保存临时数据。</li>
+<li><code>x28~x31</code>：<code>t3~t6</code>，临时(temporary)寄存器，用于存储临时数据</li>
+</ol>
+<p>https://msyksphinz-self.github.io/riscv-isadoc/html/regs.html</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

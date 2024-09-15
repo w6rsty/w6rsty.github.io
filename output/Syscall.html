@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syscall</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Syscall</h1>
+                <div class = "timestap">
+                    <p>2024-05-27</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#umi</div>
+                    
+                        <div class = "tag">#OS</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>系统调用</h1>
+<h2>struct</h2>
+<p><code>AHandlers</code> -&gt; <code>Handlers</code></p>
+<pre><code class="language-rust">struct Handler&lt;K, P, O&gt; {
+	map: HashMap&lt;K, AnyHandler&lt;P, O&gt;, RandomState&gt;,
+}
+</code></pre>
+<p><code>RandomState</code>外部的哈希算法</p>
+<pre><code class="language-rust">type AnyHandler&lt;P, O&gt; = Box&lt;dyn for&lt;'a&gt; Handler&lt;'a, Param = P, Output = O&gt;&gt;
+</code></pre>
+<p>最终构建出一个<code>HashMap&lt;Scn, AnyHandler&lt;ScParam, ScRet&gt;&gt;</code></p>
+<h2>map</h2>
+<pre><code class="language-rust">pub fn map&lt;H, Marker: 'static&gt;(mut self, key: K, handler: H) -&gt; Self
+where
+	H: for&lt;'any&gt; IntoHandler&lt;Marker, Param&lt;'any&gt; = P, Output&lt;'any&gt; = O&gt; + 'static,
+{
+	self.insert(key, handler);
+	self
+}
+</code></pre>
+<p>insert之后返回自身，进行链式调用</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

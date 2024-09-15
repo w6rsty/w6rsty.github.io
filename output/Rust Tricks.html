@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Tricks</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>Rust Tricks</h1>
+                <div class = "timestap">
+                    <p>2024-06-09</p>
+                    <p>最后编辑于：2024-06-12</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#Rust</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>Rust Tricks</h1>
+<h2>内存管理</h2>
+<p>当你用手动使用数组管理一块连续内存时，需要对外提供访问接口，其数据类型还是用户自定义的。</p>
+<p>比如说这样一个4KB的内存空间，这里通常用<code>u8</code>，即以字节为单位</p>
+<pre><code class="language-rust">const CHUNCK_SIZE: usize = 0x4000;
+struct Chunck {
+	data: [u8; CHUNCK_SIZE],
+}
+</code></pre>
+<p>为了提供对任意位置的访问，需要拿到指定偏移处的指针</p>
+<pre><code class="language-rust">impl Chunck {
+	fn addr_of_offset(&amp;self, offset: usize) -&gt; usize {
+		&amp;self.data[offset] as *const _  as usize
+	}
+}
+</code></pre>
+<p>很直观，无需多言</p>
+<p>然后提供任意内存结构的读取，将拿到的指针转换为对应类型的指针</p>
+<pre><code class="language-rust">impl Chunck {
+	pub fn get_ref&lt;T&gt;(&amp;self, offset: usize) -&gt; &amp;T {
+		let type_size = core::mem::size_of::&lt;T&gt;();
+		assert!(offset + type_size &lt;= CHUCK_SIZE);
+		let addr = self.addr_of_offset(offset);
+		unsafe { &amp;*(addr as *const T) }
+	}
+	
+	pub fn get_mut&lt;T&gt;(&amp;mut self, offset: usize) -&gt; &amp;mut T {
+		let type_size = core::mem::size_of::&lt;T&gt;();
+		assert!(offset + type_size &lt;= CHUCK_SIZE);
+		let addr = self.addr_of_offset(offset);
+		unsafe { &amp;mut *(addr as *mut T) }
+	}
+}
+</code></pre>
+<p>这里注意解引用裸指针是<code>unsafe</code>的</p>
+<p>进一步封装访问接口</p>
+<pre><code class="language-rust">pub fn read&lt;T, V&gt;(&amp;self, offset: usize, f: impl FnOnce(&amp;T) -&gt; V) -&gt; V {
+	f(self.get_ref(offset))
+}
+    
+pub fn modify&lt;T, V&gt;(&amp;mut self, offset: usize, f: impl FnOnce(&amp;mut T) -&gt; V) -&gt; V {
+	f(self.get_mut(offset))
+}
+</code></pre>
+<p>用例：</p>
+<pre><code class="language-rust">pub struct SuperBlock {
+    magic: usize,
+    pub inodes_start: usize,
+}
+
+fn main() {
+    let chunck = Chunck::new();
+    
+    let value = chunck.read(12, |block: &amp;SuperBlock| {
+       block.inodes_start 
+    });
+
+    println!("inodes start at {:#08x}", value);
+}
+
+</code></pre>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

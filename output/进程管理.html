@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进程管理</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>进程管理</h1>
+                <div class = "timestap">
+                    <p>2024-05-27</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#OS</div>
+                    
+                        <div class = "tag">#RISC-V</div>
+                    
+                        <div class = "tag">#Fusion</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>进程管理</h1>
+<p>Fusion使用无栈协程来进行任务管理和调度。利用Rust语言的异步机制，可以改进操作系统内核的模块结构，优化操作系统内核的并发性能。</p>
+<h3>无栈协程</h3>
+<p>任务/协程： 是Fusion中最基本的调度单位。根据任务切换的时机可以分为：</p>
+<ul>
+<li>抢占式：随时可能切换(时钟中断)，需要保存较多状态，切换开销大</li>
+<li>协作式：调用特定操作时发生切换，保存状态少，切换开销小</li>
+</ul>
+<p>无栈体现在，协程的局部变量不保存在栈上，切换时只会切换状态机指向和部分寄存器</p>
+<p>协程在执行时进行状态机转移。每个线程内可以有多个协程。编译器会将async标记的代码块转化为一个状态机，而状态机的大小在编译器即可以确定。</p>
+<h2>使用无栈协程的优势</h2>
+<ul>
+<li>不需要为每个协程分配独立的堆栈空间。</li>
+<li>协程只可能在有限的<code>await</code>处切换，硬刺只需保存和恢复少量的状态信息，相比于传统的线程上下文切换，任务切换开销更低。</li>
+</ul>
+<p><img src="coroutine.png" alt="" />
+当<code>async</code>函数嵌套使用时，调用者的状态机会包含对被调用者的状态机的引用，并在适当的时候<code>await</code>这个状态机。每个状态机只负责自身的状态，不需要嵌套在其他状态机中，从而避免了深层次嵌套带来的内存开销。在进行任务切换时，执行器只需改变对应状态机的指针。</p>
+<h2>任务结构的设计</h2>
+<p>Fusion将任务分为两块，信息部分和状态部分。
+任务部分对外共享，可以被其他任务访问。状态部分对任务私有，只能由该任务内部访问</p>
+<p>为了让任务支持异步执行，定义了<code>TaskFut</code>并实现了<code>Future trait</code></p>
+<pre><code class="language-rust">#[pin_project]
+pub struct TaskFut&lt;F&gt; {
+	virt: Pin&lt;Arsc&lt;Virt&gt;&gt;,
+	#[pin]
+	fut: F,
+}
+</code></pre>
+<p>任务在创建分配资源之后，传递给执行器进行调度</p>
+<pre><code class="language-rust">let fut = TaskFut::new(ts.virt.clone(), user_loop(ts, self.tf));
+executor().spawn(fut).detach();
+</code></pre>
+<p>其中任务运行在<code>user_loop</code>中。在此循环中，任务按照以下流程执行</p>
+<ul>
+<li>处理信号</li>
+<li>切换至用户态</li>
+<li>处理<code>scause</code>(中断、异常、系统调用)</li>
+</ul>
+<p>在内核启动时，完成硬件初始化后便会启动<code>run_art</code>异步运行时</p>
+<h2>任务调度</h2>
+<p>Fusion的任务调度基于async-task的调用实现，支持多核心、软抢占和任务窃取。
+调度器为每一个调度核心维护一个FIFO任务队列一个抢占槽。每个调度核心的任务获取按照以下优先级顺序</p>
+<ol>
+<li>抢占槽</li>
+<li>自身调度队列</li>
+<li>其他调度队列</li>
+</ol>
+<h3>参考资料</h3>
+<ul>
+<li><a href="https://github.com/async-kernel/documents/blob/main/design/design.md">异步操作系统设计方案</a></li>
+</ul>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

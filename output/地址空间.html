@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地址空间</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <link rel="stylesheet" href="highlight/styles/base16/gruvbox-dark-pale.css">
+    <script src="highlight/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.1/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page-container">
+        <div class = "left-container">
+            <div class="sidebar-container">
+                <div class="avatar">
+                    <img src="https:&#x2F;&#x2F;avatars.githubusercontent.com&#x2F;u&#x2F;111950229?v=4" alt="avatar">
+                </div>
+                <hr>
+                <div class="profile">
+                    <h2 class="name">w6rsty</h2>
+                    <div class="profession">
+                        
+                            <div class = "prof">C++</div>
+                        
+                            <div class = "prof">Graphics</div>
+                        
+                            <div class = "prof">Rust</div>
+                        
+                    </div>
+                    <p class="bio">A undergraduate CS student at CUMT</p>
+                    <hr>
+                    <div class="contact">
+                        <h3>Contact</h3>
+                        <p>w6rsty@88.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="right-container">
+            <header>
+                <h1>地址空间</h1>
+                <div class = "timestap">
+                    <p>2024-06-07</p>
+                    <p>最后编辑于：2024-09-15</p>
+                </div>
+                <div class = "tags">
+                    <ul>
+                    
+                        <div class = "tag">#umi</div>
+                    
+                        <div class = "tag">#OS</div>
+                    
+                        <div class = "tag">#Rust</div>
+                    
+                    </ul>
+                </div>
+            </header>
+
+            <div class = "article">
+                <h1>地址空间</h1>
+<h2>数据结构</h2>
+<p>映射</p>
+<pre><code class="language-rust">struct Mapping {
+    phys: Arc&lt;Phys&gt;,
+    start_index: usize,
+    attr: Attr,
+}
+</code></pre>
+<p>虚拟地址空间</p>
+<pre><code class="language-rust">pub struct Virt {
+    root: Mutex&lt;Table&gt;,
+    map: Mutex&lt;RangeMap&lt;LAddr, Mapping&gt;&gt;,
+    cpu_mask: AtomicUsize,
+
+    _marker: PhantomPinned,
+}
+</code></pre>
+<pre><code class="language-rust">pub struct RangeMap&lt;K, V&gt; {
+    range: Range&lt;K&gt;,
+    map: BTreeMap&lt;K, (K, V)&gt;,
+}
+</code></pre>
+<h2>加载地址空间</h2>
+<pre><code class="language-rust">#[thread_local]
+static mut CUR_VIRT: *const Virt = ptr::null();
+
+pub fn set_virt(virt: Pin&lt;Arsc&lt;Virt&gt;&gt;) -&gt; Option&lt;Arsc&lt;Virt&gt;&gt; {
+	// virt根页表指针 Pin&lt;ptr&gt;
+    let addr = unsafe { ptr::addr_of_mut!(**virt.root.as_ptr()) };
+
+    virt.cpu_mask.fetch_or(1 &lt;&lt; hart_id::hart_id(), SeqCst);
+    // Pin解包后的实际地址
+    let new = Arsc::into_raw(unsafe { Pin::into_inner_unchecked(virt) });
+    // 更新根页表
+    let old = unsafe { mem::replace(&amp;mut CUR_VIRT, new) };
+
+    if old != new {
+        let paddr = *LAddr::from(addr).to_paddr(ID_OFFSET);
+        log::debug!("tlb::set_virt: {old:p} =&gt; {new:p}");
+        unsafe {
+	        // 更新satp，刷新vma
+            satp::set(Sv39, 0, paddr &gt;&gt; PAGE_SHIFT);
+            sfence_vma_all()
+        }
+        if !old.is_null() {
+            let old = unsafe { Arsc::from_raw(old) };
+            old.cpu_mask.fetch_and(!(1 &lt;&lt; hart_id::hart_id()), SeqCst);
+            return Some(old);
+        }
+    }
+    None
+}
+</code></pre>
+<p><a href="https://doc.rust-lang.org/std/pin/struct.Pin.html#method.into_inner_unchecked">Pin::into_inner_unchecked</a></p>
+<pre><code class="language-rust">pub async fn clear(&amp;self) {
+    let mut map = self.map.lock().await;
+    let mut table = self.root.lock().await;
+
+    let range = map.root_range();
+    let range = *range.start..*range.end;
+    // 使用旧的Range生成一个新的RangeMap
+    let old = mem::replace(&amp;mut *map, RangeMap::new(range.clone()));
+
+    let count = (range.end.val() - range.start.val()) &gt;&gt; PAGE_SHIFT;
+    let _ = table.user_unmap_npages(range.start, count, frames(), ID_OFFSET);
+
+    for (addr, mapping) in old {
+        let count: usize = (addr.end.val() - addr.start.val()) &gt;&gt; PAGE_SHIFT;
+        for index in 0..count {
+            let dirty = mapping.attr.contains(Attr::WRITABLE);
+            let _ = mapping.phys.flush(index, Some(dirty), true).await;
+        }
+    }
+}
+</code></pre>
+<p><a href="https://doc.rust-lang.org/std/mem/fn.replace.html#">mem::replace</a>替换旧值，返回新值</p>
+
+            </div>
+
+            <footer>
+                <p>&copy; 2024 <a href="https://github.com/w6rsty">w6rsty</a></p>
+                <p>Powered by
+                    <a href="https://github.com/Keats/tera">Tera</a> and <a href="https://crates.io/crates/pulldown-cmark">pulldown-cmark</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+

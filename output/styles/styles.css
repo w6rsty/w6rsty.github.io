@@ -23,5 +23,24 @@ body {
     flex: 1;
     margin-left: 15%;
     padding: 0px 20px;
-    box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+    .page-container {
+        flex-direction: column;
+    }
+
+    .left-container {
+        width: 100%;
+        position: unset;
+        margin-bottom: 20px;
+
+        display: flex;
+        flex-direction: row;
+    }
+
+    .right-container {
+        margin-left: 0;
+        padding: 0px;
+    }
 }
